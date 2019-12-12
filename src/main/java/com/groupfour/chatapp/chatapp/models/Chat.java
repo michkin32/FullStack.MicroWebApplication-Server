@@ -1,0 +1,62 @@
+package com.groupfour.chatapp.chatapp.models;
+
+import javax.persistence.*;
+import java.util.Date;
+import java.util.Set;
+
+@Entity
+public class Chat {
+    @Id
+    @GeneratedValue
+    private Long chatId;
+
+    private String chatName;
+
+    private Date timeStamp;
+
+    @ManyToOne
+    User admin;
+
+    @ManyToMany
+    Set<User> users;
+
+    public Chat() {
+    }
+
+    public Long getChatId() {
+        return chatId;
+    }
+
+
+    public String getChatName() {
+        return chatName;
+    }
+
+    public void setChatName(String chatName) {
+        this.chatName = chatName;
+    }
+
+    public Date getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public User getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(User admin) {
+        this.admin = admin;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+}
