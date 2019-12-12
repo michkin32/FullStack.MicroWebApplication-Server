@@ -1,6 +1,5 @@
 package com.groupfour.chatapp.chatapp.message;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,9 +29,8 @@ public class MessageController {
         return new ResponseEntity<>(messageService.updateMessageBody(messageId, message), HttpStatus.OK);
     }
 
-//            @DeleteMapping(/messages/{id})
-//    deleteMessage()
-//
-//    @GetMapping(/messages/{id})
-//    searchForMessage()
+    @DeleteMapping("messages/{messageId")
+    public ResponseEntity<Boolean> deleteMessage(@PathVariable Long messageId) {
+        return new ResponseEntity<>(messageService.deleteMessageById(messageId), HttpStatus.OK);
+    }
 }
