@@ -10,4 +10,6 @@ public class ChatappApplication {
 		SpringApplication.run(ChatappApplication.class, args);
 	}
 
+
+
 }
