@@ -1,4 +1,4 @@
-package com.groupfour.chatapp.chatapp.models.polls;
+package com.groupfour.chatapp.chatapp.poll;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

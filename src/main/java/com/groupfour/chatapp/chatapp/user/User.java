@@ -1,8 +1,8 @@
-package com.groupfour.chatapp.chatapp.models;
+package com.groupfour.chatapp.chatapp.user;
 
 
 
-import com.groupfour.chatapp.chatapp.models.Message;
+import com.groupfour.chatapp.chatapp.message.Message;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

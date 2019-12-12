@@ -1,4 +1,6 @@
-package com.groupfour.chatapp.chatapp.models;
+package com.groupfour.chatapp.chatapp.chat;
+
+import com.groupfour.chatapp.chatapp.user.User;
 
 import javax.persistence.*;
 import java.util.Date;

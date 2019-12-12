@@ -1,6 +1,6 @@
-package com.groupfour.chatapp.chatapp.models.polls;
+package com.groupfour.chatapp.chatapp.poll;
 
-import com.groupfour.chatapp.chatapp.models.User;
+import com.groupfour.chatapp.chatapp.user.User;
 
 import javax.persistence.*;
 
