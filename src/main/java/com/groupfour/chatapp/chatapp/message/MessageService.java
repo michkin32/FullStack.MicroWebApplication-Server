@@ -26,12 +26,10 @@ public class MessageService {
         return messageRepository.findById(messageId).get();
     }
 
-    //TODO write logic for getMessagesByUserId()
     public Iterable<Message> getMessagesByUserId(Long senderId) {
         return messageRepository.findMessagesBySender(senderId);
     }
 
-    //TODO write logic for getMessagesByChatId()
     public Iterable<Message> getMessagesByChatId(Long chatId) {
        return messageRepository.findMessagesByDestinationChat(chatId);
     }
