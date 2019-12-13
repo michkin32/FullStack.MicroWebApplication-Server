@@ -19,26 +19,29 @@ public class User {
     private Long userId;
 
     private String userName;
-
     private String password;
-
     private String email;
 
-    private Date timeStamp;
+    private Date timeStamp = new Date();
+    private Integer activeStatus = 0;
 
     @OneToMany
     private Set<Message> messages;
-
-    private Integer activeStatus;
 
 
     public User() {
     }
 
+    public User(String userName, String password, String email) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+    }
+
+
     public Long getUserId() {
         return userId;
     }
-
 
     public String getUserName() {
         return userName;
