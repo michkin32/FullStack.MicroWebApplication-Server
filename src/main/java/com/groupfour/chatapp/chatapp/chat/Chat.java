@@ -15,16 +15,10 @@ public class Chat {
     private Long chatId;
 
     private String chatName;
-
     private Date timeStamp = new Date();
 
-    @Transient
-    @ManyToOne
-    User admin;
-
-    @Transient
-    @ManyToMany
-    Set<User> users = new HashSet<>();
+    @ManyToOne User admin;
+    @ManyToMany Set<User> users = new HashSet<>();
 
     public Chat() {
     }
@@ -37,13 +31,13 @@ public class Chat {
         users.add(user);
     }
 
-//    public void addUsersToChat(Set<User> listOfUsers) {
-//        users.addAll(listOfUsers);
-//    }
+    public void addUsersToChat(Set<User> listOfUsers) {
+        users.addAll(listOfUsers);
+    }
+
     public Long getChatId() {
         return chatId;
     }
-
 
     public String getChatName() {
         return chatName;
@@ -57,10 +51,6 @@ public class Chat {
         return timeStamp;
     }
 
-    public void setTimeStamp(Date timeStamp) {
-        this.timeStamp = timeStamp;
-    }
-
     public User getAdmin() {
         return admin;
     }
@@ -71,9 +61,5 @@ public class Chat {
 
     public Set<User> getUsers() {
         return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
     }
 }

@@ -1,6 +1,7 @@
 package com.groupfour.chatapp.chatapp.user;
 
 
+import com.groupfour.chatapp.chatapp.chat.Chat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
-
     private UserService userService;
     private UserRepository userRepository;
 
@@ -26,7 +26,7 @@ public class UserController {
 
     @PostMapping("/user")
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        return new ResponseEntity<>(userRepository.save(user), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
     }
 
     @PutMapping("/user/{userId}")
