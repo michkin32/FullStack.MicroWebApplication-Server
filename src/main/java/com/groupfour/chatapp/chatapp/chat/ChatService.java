@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 public class ChatService {
 
     private ChatRepository chatRepository;
+    private Chat chat;
 
     @Autowired
     public ChatService(ChatRepository chatRepository) {
@@ -18,9 +19,22 @@ public class ChatService {
         return chatRepository.findById(chatId).get();
     }
 
-    public Chat creatNewChat(Chat chat) {
+    public Chat creatNewChat(Chat newChat) {
+        return chatRepository.save(newChat);
+    }
+
+    public Chat updateChatName(Long chatId, String newChatName) {
+        chat = getChatById(chatId);
+        chat.setChatName(newChatName);
         return chatRepository.save(chat);
     }
+
+//    public Chat deleteChat(Long chatId) {
+//        chat = getChatById(chatId);
+//
+//    }
+
+
 
 
 

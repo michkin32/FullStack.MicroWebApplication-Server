@@ -27,8 +27,19 @@ public class ChatController {
     }
 
     @PostMapping(name = "chat")
-    public ResponseEntity<Chat> createNewChat(@RequestBody Chat chat)   {
-        return new ResponseEntity<>(chatService.creatNewChat(chat), HttpStatus.CREATED);
+    public ResponseEntity<Chat> createNewChat(@RequestBody Chat chatName)   {
+        return new ResponseEntity<>(chatService.creatNewChat(chatName), HttpStatus.CREATED);
+    }
+
+    @PutMapping(name = "chat/{id}")
+    public ResponseEntity<Chat> updateChatName(Long chatId, String newChatName) {
+        try{
+            chatService.verifyChat(chatId);
+            chatService.updateChatName(chatId, newChatName);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }   catch (ResourceNotFoundException ex)    {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 
