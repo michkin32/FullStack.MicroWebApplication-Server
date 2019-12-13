@@ -16,7 +16,7 @@ public class Message {
     @GeneratedValue
     private Long messageId;
 
-    private Date timeStamp;
+    private Date timeStamp = new Date();
 
     private String messageBody;
 
@@ -27,6 +27,12 @@ public class Message {
     private Chat destinationChat;
 
     public Message() {
+    }
+
+    public Message(String messageBody, User sender, Chat destinationChat){
+        this.messageBody = messageBody;
+        this.sender = sender;
+        this.destinationChat = destinationChat;
     }
 
     public Long getMessageId() {

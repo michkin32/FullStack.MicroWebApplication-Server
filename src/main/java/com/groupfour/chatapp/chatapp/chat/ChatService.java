@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 public class ChatService {
 
     private ChatRepository chatRepository;
-    private Chat chat;
     private UserRepository userRepository;
 
     @Autowired
-    public ChatService(ChatRepository chatRepository) {
+    public ChatService(ChatRepository chatRepository, UserRepository userRepository) {
         this.chatRepository = chatRepository;
+        this.userRepository = userRepository;
     }
 
     public Chat getChatById(Long chatId)   {
@@ -32,18 +32,27 @@ public class ChatService {
     }
 
 
-    public Chat creatNewChat(Chat newChat) {
+    public Chat createNewChat(Chat newChat, Long adminId) {
+        User admin = userRepository.findById(adminId).get();
+        newChat.setAdmin(admin);
         return chatRepository.save(newChat);
     }
 
+    public Chat addUserToChat(Long chatId, Long userId) {
+        Chat chat = getChatById(chatId);
+        User user = userRepository.findById(userId).get();
+        chat.addUserToChat(user);
+        return chatRepository.save(chat);
+    }
+
     public Chat updateChatName(Long chatId, String newChatName) {
-        chat = getChatById(chatId);
+        Chat chat = getChatById(chatId);
         chat.setChatName(newChatName);
         return chatRepository.save(chat);
     }
 
     public Chat updateChatAdmin(Long chatId, Long newAdminId)    {
-        chat = getChatById(chatId);
+        Chat chat = getChatById(chatId);
         User admin = userRepository.findById(newAdminId).get();
         chat.setAdmin(admin);
         return chatRepository.save(chat);
@@ -51,7 +60,7 @@ public class ChatService {
     }
 
     public Boolean deleteChatByChatId(Long chatId) {
-        chat = getChatById(chatId);
+        Chat chat = getChatById(chatId);
         chatRepository.delete(chat);
         return true;
     }
