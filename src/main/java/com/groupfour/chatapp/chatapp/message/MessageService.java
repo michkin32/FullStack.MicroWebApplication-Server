@@ -1,5 +1,7 @@
 package com.groupfour.chatapp.chatapp.message;
 
+import com.groupfour.chatapp.chatapp.chat.Chat;
+import com.groupfour.chatapp.chatapp.chat.ChatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,13 +9,16 @@ import org.springframework.stereotype.Service;
 public class MessageService {
 
     private MessageRepository messageRepository;
+    private ChatRepository chatRepository;
 
     @Autowired
-    public MessageService(MessageRepository messageRepository) {
+    public MessageService(MessageRepository messageRepository, ChatRepository chatRepository) {
         this.messageRepository = messageRepository;
+        this.chatRepository = chatRepository;
     }
 
-    public Message create(Message message) {
+    public Message createMessageByChatId(Long chatId, Message message) {
+        message.setDestinationChat(chatRepository.findById(chatId).get());
         return messageRepository.save(message);
     }
 
@@ -21,7 +26,13 @@ public class MessageService {
         return messageRepository.findById(messageId).get();
     }
 
-    //TODO write logic for getMessageByUser()
+    public Iterable<Message> getMessagesByUserId(Long senderId) {
+        return messageRepository.findMessagesBySender(senderId);
+    }
+
+    public Iterable<Message> getMessagesByChatId(Long chatId) {
+       return messageRepository.findMessagesByDestinationChat(chatId);
+    }
 
     public Message updateMessageBody(Long messageId, Message newMessage) {
         Message message = messageRepository.findById(messageId).get();

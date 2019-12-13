@@ -16,9 +16,19 @@ public class MessageController {
         this.messageService = messageService;
     }
 
-    @PostMapping("/messages")
-    public ResponseEntity<Message> createMessage(@RequestBody Message message) {
-        return new ResponseEntity<>(messageService.create(message), HttpStatus.CREATED);
+    @PostMapping("/chat/{chatId}/message")
+    public ResponseEntity<Message> createMessageInChat(@PathVariable Long chatId, @RequestBody Message message) {
+        return new ResponseEntity<>(messageService.createMessageByChatId(chatId, message), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/chat/{chatId}/messages")
+    public ResponseEntity<Iterable<Message>> getMessagesByChatId(@PathVariable Long chatId) {
+        return new ResponseEntity<>(messageService.getMessagesByChatId(chatId), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/user/{userId}/messages")
+    public ResponseEntity<Iterable<Message>> getMessagesByUserId(@PathVariable Long senderId) {
+        return new ResponseEntity<>(messageService.getMessagesByUserId(senderId), HttpStatus.CREATED);
     }
 
     @GetMapping("/messages/{messageId}")
