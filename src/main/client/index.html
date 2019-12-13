@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>YouAreEll Client</title>
+    <meta name="description" content="A cool chat web-app">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./styles.css">
+
+    <script src="./js/index.js" type="module" async></script>
+</head>
+<body>
+<main>
+    <div id="actions">
+
+    </div>
+    <div id="sidebar">
+        <div class="sidebar-search topNav">
+            <label><input type="text" name="search-val" placeholder="search" ></label>
+        </div>
+
+        <div class="chat">
+            @ Chat
+        </div>
+
+    </div>
+    <div id="hub">
+        <div class="hub-actions topNav">
+            <h3>@ Chat</h3>
+        </div>
+
+        <div id="message-container" class="messages">
+
+            <div class="message">
+                <div class="message-head">
+                    <div class="message-sender">Tester</div>
+                    <div class="message-time">01/01/19</div>
+                </div>
+                <div class="message-body">A Test Message</div>
+            </div>
+
+        </div>
+
+        <div class="message-text-box">
+            <div class="input-wrapper">
+                <label><input id="message-text-box-input" type="text" name="message-val" placeholder="Message @Chat" ></label>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
