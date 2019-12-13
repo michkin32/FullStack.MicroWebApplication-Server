@@ -12,4 +12,16 @@ public class VoteService {
     public VoteService(VoteRepository voteRepository) {
         this.voteRepository = voteRepository;
     }
+
+    public Vote save(Vote vote){
+      return voteRepository.save(vote);
+    }
+
+    public Iterable<Vote> findAll() {
+        return null;
+    }
+
+    public Iterable<Vote> findVotesByPoll(Long pollId) {
+        return null;
+    }
 }

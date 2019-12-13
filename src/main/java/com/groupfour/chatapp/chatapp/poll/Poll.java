@@ -27,6 +27,7 @@ public class Poll {
     @ManyToOne
     private User pollCreator;
 
+
     public Long getPollId() {
         return pollId;
     }

@@ -16,6 +16,9 @@ public class Vote {
     @JoinColumn(name = "OPTION_ID")
     private Option option;
 
+    @ManyToOne
+    private Poll poll;
+
     @OneToOne
     private User voter;
 
