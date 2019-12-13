@@ -1,6 +1,8 @@
 package com.groupfour.chatapp.chatapp.poll;
 
+import com.groupfour.chatapp.chatapp.chat.Chat;
 import com.groupfour.chatapp.chatapp.user.User;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,8 +14,11 @@ public class Poll {
 
     @Id
     @GeneratedValue
+    @Column(name = "POLL_ID")
     private Long pollId;
 
+
+    @Column(name = "QUESTION")
     private String pollQuestion;
 
     private Date timeStamp;
@@ -22,10 +27,27 @@ public class Poll {
     private Set<Option> options;
 
     @OneToMany
+    @JoinColumn(name = "POLL_ID")
+    @OrderBy
     private Set<Vote> votes;
 
     @ManyToOne
     private User pollCreator;
+
+    public void setPollId(Long pollId) {
+        this.pollId = pollId;
+    }
+
+    public Chat getChat() {
+        return chat;
+    }
+
+    public void setChat(Chat chat) {
+        this.chat = chat;
+    }
+
+    @ManyToOne
+    private Chat chat;
 
     public Long getPollId() {
         return pollId;
