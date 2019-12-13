@@ -18,9 +18,11 @@ public class Chat {
 
     private Date timeStamp = new Date();
 
+    @Transient
     @ManyToOne
     User admin;
 
+    @Transient
     @ManyToMany
     Set<User> users = new HashSet<>();
 
