@@ -27,7 +27,7 @@ public class ChatController {
         }
     }
 
-    @GetMapping("/chat/")
+    @GetMapping("/chat")
     public ResponseEntity<Chat> findChatByName(@PathVariable String chatName) {
         try {
             verifyChatByName(chatName);
@@ -37,7 +37,7 @@ public class ChatController {
         }
     }
 
-    @GetMapping("/chat/")
+    @GetMapping("/chats")
     public ResponseEntity<Iterable<Chat>> getAllChats() {
         return new ResponseEntity<>(chatService.getAllChats(), HttpStatus.OK);
     }
@@ -58,7 +58,7 @@ public class ChatController {
         }
     }
 
-    @PatchMapping("/chat/{chatId}")
+    @PatchMapping("/chat/{chatId}/1")
     public ResponseEntity<Chat> updateChatAdmin(@PathVariable Long chatId, @RequestBody Long newAdminId) {
         try {
             verifyChatById(chatId);
@@ -69,7 +69,7 @@ public class ChatController {
         }
     }
 
-    @DeleteMapping("/chat/{chatId")
+    @DeleteMapping("/chat/{chatId}")
     public ResponseEntity<Boolean> deleteChat(@PathVariable Long chatId) {
         try {
             verifyChatById(chatId);
