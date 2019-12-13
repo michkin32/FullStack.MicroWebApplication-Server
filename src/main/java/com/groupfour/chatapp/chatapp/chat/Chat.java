@@ -15,7 +15,7 @@ public class Chat {
 
     private String chatName;
 
-    private Date timeStamp;
+    private Date timeStamp = new Date();
 
     @ManyToOne
     User admin;
@@ -24,6 +24,12 @@ public class Chat {
     Set<User> users;
 
     public Chat() {
+    }
+
+    public Chat(String chatName, User admin, Set<User> users){
+        this.chatName = chatName;
+        this.admin = admin;
+        this.users = users;
     }
 
     public Long getChatId() {

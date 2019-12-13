@@ -18,6 +18,7 @@ public class ChatService {
     public ChatService(ChatRepository chatRepository) {
         this.chatRepository = chatRepository;
     }
+
     public Chat getChatById(Long chatId)   {
         return chatRepository.findById(chatId).get();
     }
