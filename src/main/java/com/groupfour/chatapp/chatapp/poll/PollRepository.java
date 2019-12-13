@@ -15,5 +15,6 @@ Poll findPollByChatAndPoll(Long id,Long pollId);
 
 Iterable<Poll> findPollsByChat(Long id);
 
+Poll findPollByChat_ChatId(Long id);
 
 }

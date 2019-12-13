@@ -27,7 +27,7 @@ public class PollController {
     @GetMapping(value="/chat/{id}/polls")
     public ResponseEntity<Iterable<Poll>> getAllPolls(@PathVariable Long id) {
 
-        return new ResponseEntity<>(pollService.findAll(id), HttpStatus.OK);
+        return new ResponseEntity<>(pollService.findAllPolls(id), HttpStatus.OK);
     }
     @RequestMapping(value="/chat/{id}/polls/{pollId}", method= RequestMethod.GET)
     public ResponseEntity<?> getPoll(@PathVariable Long id, @PathVariable Long pollId) {

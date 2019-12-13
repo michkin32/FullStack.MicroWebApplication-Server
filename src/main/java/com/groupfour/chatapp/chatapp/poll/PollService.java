@@ -18,7 +18,7 @@ public class PollService {
     }
 
 
-    public Iterable<Poll> findAll(Long id) {
+    public Iterable<Poll> findAllPolls(Long id) {
         Iterable<Poll> allPolls = pollRepository.findPollsByChat(id);;
         return allPolls;
     }
