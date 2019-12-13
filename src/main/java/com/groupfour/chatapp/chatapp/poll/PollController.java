@@ -14,6 +14,7 @@ import javax.validation.Valid;
 public class PollController {
 
     private PollService pollService;
+    private PollRepository pollRepository;
 
     @Autowired
     private ChatService chatService;
@@ -22,6 +23,26 @@ public class PollController {
     @Autowired
     public PollController(PollService pollService) {
         this.pollService = pollService;
+    }
+
+    @PostMapping("/poll/{pollId}")
+    public ResponseEntity<Poll> getPollByPollId(Long pollId) {
+        try {
+            verifyPollById(pollId);
+            return new ResponseEntity<>(pollService.getPollById(pollId), HttpStatus.OK);
+        }   catch (ResourceNotFoundException ex)    {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PatchMapping("/poll/{pollId}")
+    public ResponseEntity<Poll> addOptionToPoll(Long pollId, Long optionId) {
+        try {
+            verifyPollById(pollId);
+            return new ResponseEntity<>(pollService.addOptionToPoll(pollId, optionId), HttpStatus.OK);
+        }   catch (ResourceNotFoundException ex)    {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping(value="/chat/{id}/polls")
@@ -53,6 +74,13 @@ public class PollController {
         }catch(ResourceNotFoundException ex){
 
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    public void verifyPollById(Long pollId) {
+        if(pollRepository.existsById(pollId))  {
+            throw new ResourceNotFoundException("Poll " + pollId + " not found.");
         }
     }
 }
