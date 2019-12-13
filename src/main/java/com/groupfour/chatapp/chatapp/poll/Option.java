@@ -1,8 +1,6 @@
 package com.groupfour.chatapp.chatapp.poll;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Option {
@@ -12,6 +10,17 @@ public class Option {
     private Long optionId;
 
     private String optionName;
+
+    @ManyToOne
+    private Poll poll;
+
+    public Poll getPoll() {
+        return poll;
+    }
+
+    public void setPoll(Poll poll) {
+        this.poll = poll;
+    }
 
 
 
