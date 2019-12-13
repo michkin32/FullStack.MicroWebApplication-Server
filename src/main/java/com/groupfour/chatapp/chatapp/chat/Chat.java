@@ -1,5 +1,6 @@
 package com.groupfour.chatapp.chatapp.chat;
 
+import com.groupfour.chatapp.chatapp.message.Message;
 import com.groupfour.chatapp.chatapp.user.User;
 
 import javax.persistence.*;
