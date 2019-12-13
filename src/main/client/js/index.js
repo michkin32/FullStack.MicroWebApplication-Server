@@ -23,7 +23,7 @@ function errorCallback(response) {
 function populateThread(messages) {
     messages.forEach(message => {
         addMessageToThread(message);
-    })
+    });
 }
 
 function addMessageToThread(message) {
@@ -50,6 +50,9 @@ function addMessageToThread(message) {
         .appendChild(messageHead)
         .appendChild(messageBody);
     document.getElementById("message-container").appendChild(messageListItem);
+
+    let objDiv = document.getElementById("message-container");
+    objDiv.scrollTop = objDiv.scrollHeight;
 }
 
 function createFormListener() {
