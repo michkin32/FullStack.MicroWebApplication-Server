@@ -1,9 +1,11 @@
 package com.groupfour.chatapp.chatapp.chat;
 
+import com.groupfour.chatapp.chatapp.message.Message;
 import com.groupfour.chatapp.chatapp.user.User;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -14,17 +16,30 @@ public class Chat {
 
     private String chatName;
 
-    private Date timeStamp;
+    private Date timeStamp = new Date();
 
+    @Transient
     @ManyToOne
     User admin;
 
+    @Transient
     @ManyToMany
-    Set<User> users;
+    Set<User> users = new HashSet<>();
 
     public Chat() {
     }
 
+    public Chat(String chatName) {
+        this.chatName = chatName;
+    }
+
+    public void addUserToChat(User user) {
+        users.add(user);
+    }
+
+//    public void addUsersToChat(Set<User> listOfUsers) {
+//        users.addAll(listOfUsers);
+//    }
     public Long getChatId() {
         return chatId;
     }
