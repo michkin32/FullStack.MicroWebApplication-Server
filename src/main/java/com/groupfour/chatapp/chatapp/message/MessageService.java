@@ -1,9 +1,6 @@
 package com.groupfour.chatapp.chatapp.message;
 
-import com.groupfour.chatapp.chatapp.message.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -36,4 +33,12 @@ public class MessageService {
         messageRepository.deleteById(messageId);
         return true;
     }
+
+    public Boolean messageExists(Long messageId) {
+        if(messageRepository.existsById(messageId))
+            return true;
+        else
+            return false;
+    }
+
 }
