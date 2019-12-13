@@ -42,9 +42,14 @@ public class ChatController {
         return new ResponseEntity<>(chatService.getAllChats(), HttpStatus.OK);
     }
 
-    @PostMapping("/chat")
-    public ResponseEntity<Chat> createNewChat(@RequestBody Chat chatName) {
-        return new ResponseEntity<>(chatService.creatNewChat(chatName), HttpStatus.CREATED);
+    @PostMapping("/chat/{adminId}")
+    public ResponseEntity<Chat> createNewChat(@RequestBody Chat chatName, @PathVariable Long adminId) {
+        return new ResponseEntity<>(chatService.createNewChat(chatName, adminId), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/chat/{chatId}/user/{userId}")
+    public ResponseEntity<Chat> addUserToChat(@PathVariable Long chatId, @PathVariable Long userId) {
+        return new ResponseEntity<>(chatService.addUserToChat(chatId, userId), HttpStatus.OK);
     }
 
     @PatchMapping("/chat/{chatId}")
