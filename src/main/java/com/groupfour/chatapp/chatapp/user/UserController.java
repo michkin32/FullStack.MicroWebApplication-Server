@@ -24,14 +24,6 @@ public class UserController {
         User user = userRepository.findById(userId).get();
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
-    @GetMapping("/user/{userName}/login")
-    public ResponseEntity<User> loginUser(@PathVariable String userName) {
-        try {
-            return new ResponseEntity<>(userService.getUserByName(userName), HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
     @GetMapping("/user/{userId}/chats")
     public ResponseEntity<Iterable<Chat>> getUserChats(@PathVariable Long userId) {
         try {
@@ -44,6 +36,14 @@ public class UserController {
     @PostMapping("/user")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
+    }
+    @GetMapping("/user/{userName}/login")
+    public ResponseEntity<User> loginUser(@PathVariable String userName) {
+        try {
+            return new ResponseEntity<>(userService.getUserByName(userName), HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PutMapping("/user/{userId}")
