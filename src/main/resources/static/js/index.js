@@ -1,10 +1,13 @@
 import MessageService from "./message-service.js";
+import LoginService from "./login-service.js";
 
-let userId = "Tester";
+let userId = "";
+let userPassword = "";
 const messageService = new MessageService();
+const loginService = new LoginService();
 
 window.addEventListener("load", function () {
-    //document.getElementById("greeting").innerHTML = `Welcome ${userId}`;
+    createUserLoginListener();
     createFormListener();
     messageService.getAllMessages().then(successCallback, errorCallback);
 });
@@ -69,18 +72,40 @@ function createFormListener() {
             };
             input.value = "";
 
-            messageService.createNewMessage(data)
-                .then(successCallback, errorCallback);
-
             function successCallback(response) {
                 // This data comes from the resolve method
                 addMessageToThread(response);
             }
-
             function errorCallback(response) {
                 // This data comes from the reject method
                 console.log(response);
             }
+            messageService.createNewMessage(data)
+                .then(successCallback, errorCallback);
         }
     }
+}
+
+function createUserLoginListener() {
+
+    const loginSubmit = document.getElementById("user-login-submit");
+
+    loginSubmit.onclick = function (event) {
+        userId = document.getElementById("login-username-input").value;
+        userPassword = document.getElementById("login-username-input").value;
+
+
+        function successCallback(response) {
+            // This data comes from the resolve method
+            console.log(response);
+            document.getElementById("user-login").className = "hidden";
+        }
+        function errorCallback(response) {
+            // This data comes from the reject method
+            console.log(response);
+            document.getElementById("user-login").className = "error";
+        }
+        loginService.login(userId).then(successCallback, errorCallback);
+    }
+
 }
