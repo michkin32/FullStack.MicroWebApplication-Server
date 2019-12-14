@@ -15,7 +15,6 @@ function startChatApp(user) {
 
     $("#user-login").addClass("hidden");
     getUserChats();
-    getChatMessages();
     createFormListener();
 
     function getUserChats() {
@@ -25,6 +24,7 @@ function startChatApp(user) {
             });
             console.log(response);
             currentChat = userChats[0];
+            getChatMessages();
         }
         function errorCallback(response) {
             console.log(response);
@@ -47,7 +47,7 @@ function startChatApp(user) {
         function errorCallback(response) {
             console.log(response);
         }
-        messageService.getAllMessages().then(successCallback, errorCallback);
+        messageService.getAllMessages(currentChat.chatId).then(successCallback, errorCallback);
     }
     function addMessageToThread(message) {
         const messageListItem = document.createElement("div");
@@ -58,16 +58,16 @@ function startChatApp(user) {
 
         const userIdContent = document.createElement("div");
         userIdContent.className = "message-sender";
-        userIdContent.innerHTML = message.fromid;
+        userIdContent.innerHTML = message.sender.userName;
         messageHead.appendChild(userIdContent);
 
         const timeContent = document.createElement("div");
         timeContent.className = "message-time";
-        timeContent.innerHTML = message.timestamp;
+        timeContent.innerHTML = message.timeStamp;
         messageHead.appendChild(timeContent);
 
         const messageBody = document.createElement("div");
-        messageBody.innerHTML = message.message;
+        messageBody.innerHTML = message.messageBody;
 
         messageListItem
             .appendChild(messageHead)
@@ -87,8 +87,7 @@ function startChatApp(user) {
                 event.preventDefault();
 
                 const data = {
-                    fromId: user.userName,
-                    message: input.value
+                    messageBody: input.value
                 };
                 input.value = "";
 
@@ -98,7 +97,7 @@ function startChatApp(user) {
                 function errorCallback(response) {
                     console.log(response);
                 }
-                messageService.createNewMessage(data)
+                messageService.createNewMessage(user.userId, currentChat.chatId, data)
                     .then(successCallback, errorCallback);
             }
         }

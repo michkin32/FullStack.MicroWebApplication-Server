@@ -15,7 +15,7 @@ export default class UserService {
                 }
             };
 
-            request.open("GET", `http://localhost:8080/user/${userName}/login`);
+            request.open("GET", `${window.location.origin}/user/${userName}/login`);
             request.send();
         })
     }
@@ -35,7 +35,7 @@ export default class UserService {
                 }
             };
 
-            request.open("POST", `http://localhost:8080/user`);
+            request.open("POST", `${window.location.origin}/user`);
             request.setRequestHeader("Content-type", "application/json; charset=utf8");
             request.send(JSON.stringify(user));
         });
@@ -56,7 +56,7 @@ export default class UserService {
                 }
             };
 
-            request.open("GET", `http://localhost:8080/user/${userId}/chats`);
+            request.open("GET", `${window.location.origin}/user/${userId}/chats`);
             request.send();
         });
     }
