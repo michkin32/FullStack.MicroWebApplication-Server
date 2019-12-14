@@ -1,5 +1,6 @@
 export default class MessageService {
 
+
     getAllMessages() {
         const request = new XMLHttpRequest();
 

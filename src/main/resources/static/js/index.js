@@ -1,111 +1,155 @@
 import MessageService from "./message-service.js";
-import LoginService from "./login-service.js";
+import UserService from "./user-service.js";
 
-let userId = "";
-let userPassword = "";
 const messageService = new MessageService();
-const loginService = new LoginService();
+const userService = new UserService();
 
-window.addEventListener("load", function () {
+
+$( document ).ready(function() {
     createUserLoginListener();
-    createFormListener();
-    messageService.getAllMessages().then(successCallback, errorCallback);
 });
 
-function successCallback(response) {
-    // This data comes from the resolve method
-    populateThread(response);
-    console.log(response);
-}
+function startChatApp(user) {
+    let userChats = [];
+    let currentChat;
 
-function errorCallback(response) {
-    // This data comes from the reject method
-    console.log(response);
-}
+    $("#user-login").addClass("hidden");
+    getUserChats();
+    getChatMessages();
+    createFormListener();
 
-function populateThread(messages) {
-    messages.forEach(message => {
-        addMessageToThread(message);
-    });
-}
+    function getUserChats() {
+        function successCallback(response) {
+            response.forEach(chat => {
+               addChatToThread(chat);
+            });
+            console.log(response);
+            currentChat = userChats[0];
+        }
+        function errorCallback(response) {
+            console.log(response);
+        }
+        userService.getChats(user.userId).then(successCallback, errorCallback);
+    }
+    function addChatToThread(chat) {
+        $("#chat-container").append(
+            "<div class='chat'>@ " + chat.chatName + "</div>");
+        userChats.push(chat);
+    }
 
-function addMessageToThread(message) {
-    const messageListItem = document.createElement("div");
-    messageListItem.className = "message";
+    function getChatMessages() {
+        function successCallback(response) {
+            response.forEach(message => {
+                addMessageToThread(message);
+            });
+            console.log(response);
+        }
+        function errorCallback(response) {
+            console.log(response);
+        }
+        messageService.getAllMessages().then(successCallback, errorCallback);
+    }
+    function addMessageToThread(message) {
+        const messageListItem = document.createElement("div");
+        messageListItem.className = "message";
 
-    const messageHead = document.createElement("div");
-    messageHead.className = "message-head";
+        const messageHead = document.createElement("div");
+        messageHead.className = "message-head";
 
-    const userIdContent = document.createElement("div");
-    userIdContent.className = "message-sender";
-    userIdContent.innerHTML = message.fromid;
-    messageHead.appendChild(userIdContent);
+        const userIdContent = document.createElement("div");
+        userIdContent.className = "message-sender";
+        userIdContent.innerHTML = message.fromid;
+        messageHead.appendChild(userIdContent);
 
-    const timeContent = document.createElement("div");
-    timeContent.className = "message-time";
-    timeContent.innerHTML = message.timestamp;
-    messageHead.appendChild(timeContent);
+        const timeContent = document.createElement("div");
+        timeContent.className = "message-time";
+        timeContent.innerHTML = message.timestamp;
+        messageHead.appendChild(timeContent);
 
-    const messageBody = document.createElement("div");
-    messageBody.innerHTML = message.message;
+        const messageBody = document.createElement("div");
+        messageBody.innerHTML = message.message;
 
-    messageListItem
-        .appendChild(messageHead)
-        .appendChild(messageBody);
-    document.getElementById("message-container").appendChild(messageListItem);
+        messageListItem
+            .appendChild(messageHead)
+            .appendChild(messageBody);
+        document.getElementById("message-container").appendChild(messageListItem);
 
-    let objDiv = document.getElementById("message-container");
-    objDiv.scrollTop = objDiv.scrollHeight;
-}
+        let objDiv = document.getElementById("message-container");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
 
-function createFormListener() {
-    const input = document.getElementById("message-text-box-input");
+    function createFormListener() {
+        const input = document.getElementById("message-text-box-input");
 
-    input.onkeydown = function (event) {
-        // stop the regular form submission
-        if (event.key === 'Enter') {
-            event.preventDefault();
+        input.onkeydown = function (event) {
+            // stop the regular form submission
+            if (event.key === 'Enter') {
+                event.preventDefault();
 
-            const data = {
-                fromid: userId,
-                message: input.value
-            };
-            input.value = "";
+                const data = {
+                    fromId: user.userName,
+                    message: input.value
+                };
+                input.value = "";
 
-            function successCallback(response) {
-                // This data comes from the resolve method
-                addMessageToThread(response);
+                function successCallback(response) {
+                    addMessageToThread(response);
+                }
+                function errorCallback(response) {
+                    console.log(response);
+                }
+                messageService.createNewMessage(data)
+                    .then(successCallback, errorCallback);
             }
-            function errorCallback(response) {
-                // This data comes from the reject method
-                console.log(response);
-            }
-            messageService.createNewMessage(data)
-                .then(successCallback, errorCallback);
         }
     }
 }
 
 function createUserLoginListener() {
+    $("#user-login .login-switch").click(function () {
 
-    const loginSubmit = document.getElementById("user-login-submit");
+        let login = $("#login-wrapper");
+        let register = $("#register-wrapper");
 
-    loginSubmit.onclick = function (event) {
-        userId = document.getElementById("login-username-input").value;
-        userPassword = document.getElementById("login-username-input").value;
+        if(login.hasClass("hidden")) {
+            login.removeClass("hidden");
+            register.addClass("hidden");
+        } else {
+            login.addClass("hidden");
+            register.removeClass("hidden");
+        }
+    });
 
+    $("#user-login-submit").click( function () {
+        let userName = document.getElementById("login-username-input").value;
+        let userPassword = document.getElementById("login-username-input").value;
 
         function successCallback(response) {
-            // This data comes from the resolve method
             console.log(response);
-            document.getElementById("user-login").className = "hidden";
+            startChatApp(response);
         }
         function errorCallback(response) {
-            // This data comes from the reject method
             console.log(response);
-            document.getElementById("user-login").className = "error";
+            $("#user-login #login-wrapper .error-message").removeClass("hidden");
         }
-        loginService.login(userId).then(successCallback, errorCallback);
-    }
+        userService.login(userName).then(successCallback, errorCallback);
+    });
 
+    $("#user-register-submit").click( function () {
+        const userData = {
+            email : $("#register-email-input").val(),
+            userName : $("#register-username-input").val(),
+            password : $("#register-password-input").val()
+        };
+
+        function successCallback(response) {
+            console.log(response);
+            startChatApp(response)
+        }
+        function errorCallback(response) {
+            console.log(response);
+            $("#user-login #login-wrapper .error-message").removeClass("hidden");
+        }
+        userService.createUser(userData).then(successCallback, errorCallback);
+    });
 }

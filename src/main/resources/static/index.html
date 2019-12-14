@@ -3,11 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>YouAreEll Client</title>
+    <title>Chat App</title>
     <meta name="description" content="A cool chat web-app">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles.css">
-
     <script src="./js/index.js" type="module" async></script>
 </head>
 <body>
@@ -20,14 +21,11 @@
             <label><input type="text" name="search-val" placeholder="search" ></label>
         </div>
 
-        <div class="chat">
-            @ Chat
-        </div>
-
+        <div id="chat-container"></div>
     </div>
     <div id="hub">
         <div class="hub-actions topNav">
-            <h3>@ Chat</h3>
+            <h3>@ Default</h3>
         </div>
 
         <div id="message-container" class="messages">
@@ -51,9 +49,18 @@
     <div id="user-login">
         <div id = "login-wrapper">
             <label><input id="login-username-input" type="text" name="username-val" placeholder="Username" ></label>
-            <label><input id="login-password-input" type="text" name="password-val" placeholder="Password" ></label>
-            <button id="user-login-submit">Submit</button>
-            <p class="error-message">Wrong username or password</p>
+            <label><input id="login-password-input" type="password" name="password-val" placeholder="Password" ></label>
+            <button id="user-login-submit">Login</button>
+            <p class="error-message hidden">Wrong username or password</p>
+            <p class="register">Need an account? <a class="login-switch link">Register</a></p>
+        </div>
+        <div id = "register-wrapper" class="hidden">
+            <label><input id="register-email-input" type="text" name="email-val" placeholder="Email" ></label>
+            <label><input id="register-username-input" type="text" name="username-val" placeholder="Username" ></label>
+            <label><input id="register-password-input" type="password" name="password-val" placeholder="Password" ></label>
+            <button id="user-register-submit">Create Account</button>
+            <p class="error-message hidden">Invalid Input</p>
+            <p class="login">Already have an account? <a class="login-switch link">Login</a></p>
         </div>
     </div>
 </main>
