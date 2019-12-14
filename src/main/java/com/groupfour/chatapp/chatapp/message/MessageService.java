@@ -27,11 +27,11 @@ public class MessageService {
     }
 
     public Iterable<Message> getMessagesByUserId(Long senderId) {
-        return messageRepository.findMessagesBySender(senderId);
+        return messageRepository.findMessagesBySender_UserId(senderId);
     }
 
     public Iterable<Message> getMessagesByChatId(Long chatId) {
-       return messageRepository.findMessagesByDestinationChat(chatId);
+       return messageRepository.findMessagesByDestinationChat_ChatId(chatId);
     }
 
     public Message updateMessageBody(Long messageId, Message newMessage) {

@@ -1,6 +1,6 @@
-export default class MessageService {
+export default class LoginService {
 
-    getAllMessages() {
+    login(userName) {
         const request = new XMLHttpRequest();
 
         return new Promise(function (resolve, reject) {
@@ -21,14 +21,13 @@ export default class MessageService {
                 }
             };
 
-            request.open("GET", "http://zipcode.rocks:8085/messages");
-
+            request.open("GET", `http://localhost:8080/user/${userName}/login`);
             request.send();
         })
     }
 
 
-    createNewMessage(message) {
+    createUser(user) {
         const request = new XMLHttpRequest();
 
         return new Promise(function (resolve, reject) {
@@ -46,11 +45,8 @@ export default class MessageService {
                 }
             };
 
-            request.open("POST", `http://zipcode.rocks:8085/ids/${message.fromid}/messages`);
-
-            request.send(JSON.stringify(message));
+            request.open("POST", `http://localhost:8080/user`);
+            request.send(JSON.stringify(user));
         });
     }
-
-
 }
