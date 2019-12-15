@@ -34,6 +34,7 @@ public class Poll {
     @ManyToOne
     private User pollCreator;
 
+
     public void setPollId(Long pollId) {
         this.pollId = pollId;
     }
@@ -48,6 +49,7 @@ public class Poll {
 
     @ManyToOne
     private Chat chat;
+
 
     public Long getPollId() {
         return pollId;

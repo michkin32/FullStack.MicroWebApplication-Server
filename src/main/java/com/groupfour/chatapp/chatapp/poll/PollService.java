@@ -60,4 +60,5 @@ public class PollService {
         pollRepository.deleteById(id);
         return true;
     }
+
 }
