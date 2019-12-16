@@ -13,6 +13,21 @@ function startChatApp(user) {
     let userChats = [];
     let currentChat;
 
+    let socket = new SockJS('/ws');
+    let stompClient = Stomp.over(socket);
+    stompClient.connect({}, onConnected, onError);
+    function onConnected() {
+        stompClient.subscribe('/topic/public', onMessageReceived);
+    }
+    function onError(error) {
+        console.log('Could not connect to WebSocket server. Please refresh this page to try again!');
+    }
+    function onMessageReceived(payload) {
+        let message = JSON.parse(payload.body);
+        addMessageToThread(message);
+    }
+
+
     $("#user-login").addClass("hidden");
     getUserChats();
     createFormListener();
@@ -92,7 +107,7 @@ function startChatApp(user) {
                 input.value = "";
 
                 function successCallback(response) {
-                    addMessageToThread(response);
+                    stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(response));
                 }
                 function errorCallback(response) {
                     console.log(response);
