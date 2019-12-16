@@ -37,6 +37,7 @@ public class PollController {
 
     @RequestMapping(value="/chat/polls", method=RequestMethod.POST)
     public ResponseEntity<?> createPoll(@Valid @RequestBody Poll poll) {
+        pollService.
         poll = pollService.create(poll);
         return new ResponseEntity<>(pollService.create(poll), HttpStatus.CREATED);
     }
