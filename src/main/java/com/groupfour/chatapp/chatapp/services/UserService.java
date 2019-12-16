@@ -1,13 +1,15 @@
 package com.groupfour.chatapp.chatapp.services;
 
-import com.groupfour.chatapp.chatapp.chat.Chat;
-import com.groupfour.chatapp.chatapp.chat.ChatRepository;
+
 import com.groupfour.chatapp.chatapp.exceptions.ResourceNotFoundException;
+import com.groupfour.chatapp.chatapp.models.Chat;
+import com.groupfour.chatapp.chatapp.models.User;
+import com.groupfour.chatapp.chatapp.repositories.ChatRepository;
+import com.groupfour.chatapp.chatapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Transient;
-import java.util.Optional;
+
 
 @Service
 public class UserService {

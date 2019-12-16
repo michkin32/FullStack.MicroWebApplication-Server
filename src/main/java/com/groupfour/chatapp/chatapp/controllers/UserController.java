@@ -3,6 +3,10 @@ package com.groupfour.chatapp.chatapp.controllers;
 
 
 import com.groupfour.chatapp.chatapp.exceptions.ResourceNotFoundException;
+import com.groupfour.chatapp.chatapp.models.Chat;
+import com.groupfour.chatapp.chatapp.models.User;
+import com.groupfour.chatapp.chatapp.repositories.UserRepository;
+import com.groupfour.chatapp.chatapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +31,7 @@ public class UserController {
     @GetMapping("/user/{userId}/chats")
     public ResponseEntity<Iterable<Chat>> getUserChats(@PathVariable Long userId) {
         try {
-            return new ResponseEntity<>(userService.getUserChats(userId), HttpStatus.OK);
+            return new ResponseEntity(userService.getUserChats(userId), HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -37,6 +41,7 @@ public class UserController {
     public ResponseEntity<User> createUser(@RequestBody User user) {
         return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
     }
+
     @GetMapping("/user/{userName}/login")
     public ResponseEntity<User> loginUser(@PathVariable String userName) {
         try {

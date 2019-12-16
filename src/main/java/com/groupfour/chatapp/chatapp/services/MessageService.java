@@ -1,8 +1,10 @@
 package com.groupfour.chatapp.chatapp.services;
 
-import com.groupfour.chatapp.chatapp.chat.Chat;
-import com.groupfour.chatapp.chatapp.chat.ChatRepository;
-import com.groupfour.chatapp.chatapp.user.UserRepository;
+
+import com.groupfour.chatapp.chatapp.models.Message;
+import com.groupfour.chatapp.chatapp.repositories.ChatRepository;
+import com.groupfour.chatapp.chatapp.repositories.MessageRepository;
+import com.groupfour.chatapp.chatapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
