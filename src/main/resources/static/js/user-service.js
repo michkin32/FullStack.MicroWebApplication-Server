@@ -1,19 +1,13 @@
-export default class MessageService {
+export default class UserService {
 
-    getAllMessages() {
+    login(userName) {
         const request = new XMLHttpRequest();
-
         return new Promise(function (resolve, reject) {
-            // Setup our listener to process compeleted requests
             request.onload = function () {
-                // Process the response
                 if (request.status >= 200 && request.status < 300) {
-                    // If successful
                     const threads = JSON.parse(request.responseText);
-                    // this data is passed to the success callback
                     resolve(threads);
                 } else {
-                    // this data is passed to the failure callback
                     reject({
                         status: request.status,
                         statusText: request.statusText
@@ -21,22 +15,17 @@ export default class MessageService {
                 }
             };
 
-            request.open("GET", "http://zipcode.rocks:8085/messages");
-
+            request.open("GET", `${window.location.origin}/user/${userName}/login`);
             request.send();
         })
     }
 
-
-    createNewMessage(message) {
+    createUser(user) {
         const request = new XMLHttpRequest();
-
         return new Promise(function (resolve, reject) {
-            // Setup our listener to process compeleted requests
             request.onload = function () {
                 // Process the response
                 if (request.status >= 200 && request.status < 300) {
-                    // If successful
                     resolve(JSON.parse(request.responseText));
                 } else {
                     reject({
@@ -46,11 +35,29 @@ export default class MessageService {
                 }
             };
 
-            request.open("POST", `http://zipcode.rocks:8085/ids/${message.fromid}/messages`);
-
-            request.send(JSON.stringify(message));
+            request.open("POST", `${window.location.origin}/user`);
+            request.setRequestHeader("Content-type", "application/json; charset=utf8");
+            request.send(JSON.stringify(user));
         });
     }
 
+    getChats(userId) {
+        const request = new XMLHttpRequest();
+        return new Promise(function (resolve, reject) {
+            request.onload = function () {
+                if (request.status >= 200 && request.status < 300) {
+                    const threads = JSON.parse(request.responseText);
+                    resolve(threads);
+                } else {
+                    reject({
+                        status: request.status,
+                        statusText: request.statusText
+                    });
+                }
+            };
 
+            request.open("GET", `${window.location.origin}/user/${userId}/chats`);
+            request.send();
+        });
+    }
 }

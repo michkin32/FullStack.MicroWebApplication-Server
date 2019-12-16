@@ -1,9 +1,25 @@
+* {
+    font-family: 'Montserrat', sans-serif;
+}
 body {
     overflow: hidden;
 }
 
-input:focus {
+input:focus, button:focus {
     outline-width: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.link {
+    color: #0069ff;
+    font-weight: 500;
+    cursor: pointer;
+}
+.link:hover {
+    text-decoration: underline;
 }
 
 #actions {
@@ -114,4 +130,72 @@ input:focus {
     color: #72767d;
     padding: 9px 10px;
     font-size: 14px;
+}
+
+#user-login {
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 1;
+}
+#user-login.hidden {
+    display: none;
+}
+#user-login #login-wrapper, #user-login #register-wrapper {
+    text-align: center;
+    width: fit-content;
+    min-width: 300px;
+    margin: calc(41vh - 85px) auto;
+    padding: 40px;
+    background: white;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+#user-login input {
+    width: calc(100% - 20px);
+    height: 25px;
+    margin: 13px auto;
+    display: block;
+    border: none;
+    border-radius: 5px;
+    background: #1f2225;
+    color: #72767d;
+    padding: 10px 10px;
+    font-size: 14px;
+}
+
+#user-login button {
+    width: calc(100% - 20px);
+    box-sizing: content-box;
+    background: #0069ff;
+    border-radius: 4px;
+    border: none;
+    font-size: 14px;
+    color: white;
+    padding: 10px 10px;
+    margin-top: 10px;
+
+    transition: background .3s;
+}
+#user-login button:hover {
+     background:  #1633ff
+}
+
+#user-login p {
+    font-size: 14px;
+    text-align: left;
+    margin-bottom: 0;
+}
+
+#user-login .error-message {
+    color: red;
+}
+#user-login.error .error-message {
+    display: block;
+}
+#user-login .register {
+    color: #5b6987;
 }

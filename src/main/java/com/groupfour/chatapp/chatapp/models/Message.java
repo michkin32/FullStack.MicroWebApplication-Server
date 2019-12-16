@@ -14,7 +14,6 @@ public class Message {
     private Long messageId;
 
     private Date timeStamp = new Date();
-
     private String messageBody;
 
     @ManyToOne
@@ -26,10 +25,8 @@ public class Message {
     public Message() {
     }
 
-    public Message(String messageBody, User sender, Chat destinationChat){
+    public Message(String messageBody){
         this.messageBody = messageBody;
-        this.sender = sender;
-        this.destinationChat = destinationChat;
     }
 
     public Long getMessageId() {
