@@ -19,7 +19,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-public class BasicSecurityConfigurationTest {
+public class SecurityConfigurationTest {
 
     TestRestTemplate restTemplate;
     URL base;
@@ -28,11 +28,20 @@ public class BasicSecurityConfigurationTest {
     @Before
     public void setUp() throws MalformedURLException    {
         restTemplate = new TestRestTemplate("user", "password");
-        base = new URL("http://localhost:8080/" + port);
+        base = new URL("http://localhost:" + port);
     }
 
     @Test
     public void whenLoggedUserRequestsHomePage_ThenSuccess() throws IllegalStateException, IOException  {
+        ResponseEntity<String> response = restTemplate.getForEntity(base.toString(), String.class);
+
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+        assertTrue(response.getBody().contains("Unauthorized"));
+    }
+
+    @Test
+    public void whenUserWithWrongCredentials_thenUnauthorizedPage() throws Exception{
+        restTemplate = new TestRestTemplate("user", "wrongpassword");
         ResponseEntity<String> response = restTemplate.getForEntity(base.toString(), String.class);
 
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
