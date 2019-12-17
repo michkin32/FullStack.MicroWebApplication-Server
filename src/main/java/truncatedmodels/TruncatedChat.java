@@ -1,4 +1,6 @@
-package com.groupfour.chatapp.chatapp.models;
+package truncatedmodels;
+
+import com.groupfour.chatapp.chatapp.models.User;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -6,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Chat {
+public class TruncatedChat {
     @Id
     @GeneratedValue
     private Long chatId;
@@ -16,10 +18,10 @@ public class Chat {
     @ManyToOne User admin;
     @ManyToMany Set<User> users = new HashSet<>();
 
-    public Chat() {
+    public TruncatedChat() {
     }
 
-    public Chat(String chatName) {
+    public TruncatedChat(String chatName) {
         this.chatName = chatName;
     }
 
