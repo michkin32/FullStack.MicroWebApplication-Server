@@ -1,6 +1,7 @@
 package com.groupfour.chatapp.chatapp.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Option {
@@ -9,6 +10,7 @@ public class Option {
     @GeneratedValue
     private Long optionId;
 
+    @NotBlank
     private String optionName;
 
     @ManyToOne
