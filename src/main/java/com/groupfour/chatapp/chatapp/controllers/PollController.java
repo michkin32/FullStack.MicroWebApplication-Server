@@ -33,7 +33,7 @@ public class PollController {
         try {
             verifyPollById(pollId);
             return new ResponseEntity<>(pollService.getPollById(pollId), HttpStatus.OK);
-        }   catch (ResourceNotFoundException ex)    {
+        } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -43,38 +43,40 @@ public class PollController {
         try {
             verifyPollById(pollId);
             return new ResponseEntity<>(pollService.addOptionToPoll(pollId, optionId), HttpStatus.OK);
-        }   catch (ResourceNotFoundException ex)    {
+        } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @GetMapping(value="/chat/{id}/polls")
+    @GetMapping(value = "/chat/{id}/polls")
     public ResponseEntity<Iterable<Poll>> getAllPolls(@PathVariable Long id) {
 
         return new ResponseEntity<>(pollService.findAll(id), HttpStatus.OK);
     }
-    @RequestMapping(value="/chat/{id}/polls/{pollId}", method= RequestMethod.GET)
+
+    @RequestMapping(value = "/chat/{id}/polls/{pollId}", method = RequestMethod.GET)
     public ResponseEntity<?> getPoll(@PathVariable Long id, @PathVariable Long pollId) {
 
-       return new ResponseEntity<>(pollService.show(id, pollId), HttpStatus.OK);
+        return new ResponseEntity<>(pollService.show(id, pollId), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/chat/polls", method=RequestMethod.POST)
+    @RequestMapping(value = "/chat/polls", method = RequestMethod.POST)
     public ResponseEntity<?> createPoll(@Valid @RequestBody Poll poll) {
         poll = pollService.create(poll);
         return new ResponseEntity<>(pollService.create(poll), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value="/chat/{id}/polls", method=RequestMethod.PUT)
-    public ResponseEntity<?> updatePoll(@Valid @RequestBody Poll poll,@PathVariable Long id, @PathVariable Long pollId) {
-        return new ResponseEntity<>(pollService.update(pollId,poll), HttpStatus.CREATED);
+    @RequestMapping(value = "/chat/{id}/polls", method = RequestMethod.PUT)
+    public ResponseEntity<?> updatePoll(@Valid @RequestBody Poll poll, @PathVariable Long id, @PathVariable Long pollId) {
+        return new ResponseEntity<>(pollService.update(pollId, poll), HttpStatus.CREATED);
     }
-    @RequestMapping(value="/chat/{id}/polls", method=RequestMethod.DELETE)
-    public ResponseEntity<?> deletePoll( @PathVariable Long id) {
+
+    @RequestMapping(value = "/chat/{id}/polls", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deletePoll(@PathVariable Long id) {
         try {
             pollService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
-        }catch(ResourceNotFoundException ex){
+        } catch (ResourceNotFoundException ex) {
 
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -82,7 +84,7 @@ public class PollController {
 
 
     public void verifyPollById(Long pollId) {
-        if(pollRepository.existsById(pollId))  {
+        if (pollRepository.existsById(pollId)) {
             throw new ResourceNotFoundException("Poll " + pollId + " not found.");
         }
     }

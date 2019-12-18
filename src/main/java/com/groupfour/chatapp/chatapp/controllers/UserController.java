@@ -1,7 +1,6 @@
 package com.groupfour.chatapp.chatapp.controllers;
 
 
-
 import com.groupfour.chatapp.chatapp.exceptions.ResourceNotFoundException;
 import com.groupfour.chatapp.chatapp.models.Chat;
 import com.groupfour.chatapp.chatapp.models.User;
@@ -28,6 +27,7 @@ public class UserController {
         User user = userRepository.findById(userId).get();
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
     @GetMapping("/user/{userId}/chats")
     public ResponseEntity<Iterable<Chat>> getUserChats(@PathVariable Long userId) {
         try {
@@ -45,7 +45,7 @@ public class UserController {
     @GetMapping("/user/{userName}/login")
     public ResponseEntity<User> loginUser(@PathVariable String userName) {
         try {
-            return new ResponseEntity<>(userService.getUserByName(userName), HttpStatus.OK);
+            return new ResponseEntity<>(userService.getUserByUserName(userName), HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

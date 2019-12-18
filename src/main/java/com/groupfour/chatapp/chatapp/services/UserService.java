@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 
-
 @Service
 public class UserService {
     final private Long defaultChatId = 1L;
@@ -45,12 +44,8 @@ public class UserService {
         return chatRepository.findAllByUsersContains(user);
     }
 
-    public User getUserByUserName(String name) throws ResourceNotFoundException{
+    public User getUserByUserName(String name) throws ResourceNotFoundException {
         return userRepository.findByUserName(name).orElseThrow(ResourceNotFoundException::new);
-    }
 
-    @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return null;
     }
 }

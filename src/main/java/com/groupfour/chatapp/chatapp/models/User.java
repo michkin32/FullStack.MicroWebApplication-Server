@@ -2,7 +2,6 @@ package com.groupfour.chatapp.chatapp.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.groupfour.chatapp.chatapp.models.Message;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,7 +15,7 @@ public class User {
     private Long userId;
 
     @Column
-    private String userName;
+    private String username;
 
     @Column
     @JsonIgnore
@@ -27,17 +26,17 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "USER_ROLES", joinColumns = {
-            @JoinColumn(name = "USER_ID") }, inverseJoinColumns = {
-            @JoinColumn(name = "ROLE_ID") })
+            @JoinColumn(name = "USER_ID")}, inverseJoinColumns = {
+            @JoinColumn(name = "ROLE_ID")})
     private Set roles;
 
 
-private Date timeStamp=new Date();
-private Integer activeStatus=0;
+    private Date timeStamp = new Date();
+    private Integer activeStatus = 0;
 
 
-@OneToMany
-private Set<Message> messages;
+    @OneToMany
+    private Set<Message> messages;
 
     public void setUserId(Long userId) {
         this.userId = userId;
@@ -51,64 +50,65 @@ private Set<Message> messages;
         this.roles = roles;
     }
 
-    public User(){ }
+    public User() {
+    }
 
-public User(String userName,String password,String email){
-        this.userName=userName;
-        this.password=password;
-        this.email=email;
-        }
+    public User(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
 
 
-public Long getUserId(){
+    public Long getUserId() {
         return userId;
-        }
+    }
 
-public String getUserName(){
-        return userName;
-        }
+    public String getUsername() {
+        return username;
+    }
 
-public void setUserName(String userName){
-        this.userName=userName;
-        }
+    public void setUsername(String userName) {
+        this.username = userName;
+    }
 
-public String getPassword(){
+    public String getPassword() {
         return password;
-        }
+    }
 
-public void setPassword(String password){
-        this.password=password;
-        }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-public String getEmail(){
+    public String getEmail() {
         return email;
-        }
+    }
 
-public void setEmail(String email){
-        this.email=email;
-        }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-public Date getTimeStamp(){
+    public Date getTimeStamp() {
         return timeStamp;
-        }
+    }
 
-public void setTimeStamp(Date timeStamp){
-        this.timeStamp=timeStamp;
-        }
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
+    }
 
-public Set<Message> getMessages(){
+    public Set<Message> getMessages() {
         return messages;
-        }
+    }
 
-public void setMessages(Set<Message> messages){
-        this.messages=messages;
-        }
+    public void setMessages(Set<Message> messages) {
+        this.messages = messages;
+    }
 
-public Integer getActiveStatus(){
+    public Integer getActiveStatus() {
         return activeStatus;
-        }
+    }
 
-public void setActiveStatus(Integer activeStatus){
-        this.activeStatus=activeStatus;
-        }
-        }
+    public void setActiveStatus(Integer activeStatus) {
+        this.activeStatus = activeStatus;
+    }
+}

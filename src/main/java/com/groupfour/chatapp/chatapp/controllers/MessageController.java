@@ -27,6 +27,7 @@ public class MessageController {
     public Message sendMessage(@Payload Message chatMessage) {
         return chatMessage;
     }
+
     @PostMapping("user/{userId}/chat/{chatId}/message")
     public ResponseEntity<Message> createMessageInChat(@PathVariable Long userId, @PathVariable Long chatId, @RequestBody Message message) {
         return new ResponseEntity<>(messageService.createMessageByChatId(userId, chatId, message), HttpStatus.CREATED);
