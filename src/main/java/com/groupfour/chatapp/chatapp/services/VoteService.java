@@ -43,18 +43,16 @@ public class VoteService {
         return vote;
     }
 
-    public Iterable<Vote> findAll() {
-        return null;
-    }
-
-    public Iterable<Vote> findVotesByPoll(Long pollId) {
-        return null;
+    public Iterable<Vote> findAll(Long id) {
+        return voteRepository.findVotesByPoll(id);
     }
 
     // SELECT *
     // FROM chats JOIN polls
     // ON chats.id = polls.id
     public Vote show(Long chatId, Long pollId) {
+        Chat chat = chatRepository.findById(chatId).get();
+        Poll poll = pollRepository.findById(pollId).get();
         return null;
     }
 }

@@ -11,13 +11,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-
 /**
  * controller is responsible for handling
  *      - incoming requests
  *      - outgoing responses
  *      - building response-headers
  */
+
 @RestController
 public class VoteController {
     private final PollService pollService;
@@ -53,9 +53,6 @@ public class VoteController {
     }
 
     @RequestMapping(value = "/polls/votes", method = RequestMethod.GET)
-    public Iterable<Vote> getAllVotes() {
-        return voteService.findAll();
-    }
-
-
+    public ResponseEntity<Iterable<Vote>> getAllVotes( @PathVariable Long id) {
+        return new ResponseEntity<>(voteService.findAll(id), HttpStatus.OK); }
 }

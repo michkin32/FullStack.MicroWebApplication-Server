@@ -1,9 +1,5 @@
 package com.groupfour.chatapp.chatapp.models;
 
-
-
-import com.groupfour.chatapp.chatapp.models.Message;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -28,7 +24,6 @@ public class User {
     @OneToMany
     private Set<Message> messages;
 
-
     public User() {
     }
 
@@ -37,7 +32,6 @@ public class User {
         this.password = password;
         this.email = email;
     }
-
 
     public Long getUserId() {
         return userId;

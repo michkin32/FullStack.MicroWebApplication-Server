@@ -80,7 +80,6 @@ public class PollController {
         }
     }
 
-
     public void verifyPollById(Long pollId) {
         if(pollRepository.existsById(pollId))  {
             throw new ResourceNotFoundException("Poll " + pollId + " not found.");
