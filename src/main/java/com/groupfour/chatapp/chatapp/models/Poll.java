@@ -6,8 +6,6 @@ import java.util.Set;
 
 @Entity
 public class Poll {
-
-
     @Id
     @GeneratedValue
     @Column(name = "POLL_ID")
