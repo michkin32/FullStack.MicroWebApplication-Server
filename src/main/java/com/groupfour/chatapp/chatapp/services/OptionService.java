@@ -17,15 +17,13 @@ public class OptionService {
         this.optionRepository = optionRepository;
     }
 
-    public Option getOptionById(Long optionId)  {
+    public Option getOptionById(Long optionId) {
         return optionRepository.findById(optionId).get();
     }
 
     public Option createNewOption(Option newOption) {
         return optionRepository.save(newOption);
     }
-
-
 
 
 }

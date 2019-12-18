@@ -19,9 +19,9 @@ public class PollService {
     }
 
 
-
     public Iterable<Poll> findAll(Long id) {
-        Iterable<Poll> allPolls = pollRepository.findPollsByChat(id);;
+        Iterable<Poll> allPolls = pollRepository.findPollsByChat(id);
+        ;
         return allPolls;
     }
 
@@ -29,11 +29,11 @@ public class PollService {
         return pollRepository.findAll();
     }
 
-    public Poll show(Long id,Long pollId) {
+    public Poll show(Long id, Long pollId) {
         return pollRepository.findPollByChatAndPoll(id, pollId);
     }
 
-    public Poll getPollById(Long pollId)   {
+    public Poll getPollById(Long pollId) {
         return pollRepository.findById(pollId).get();
     }
 

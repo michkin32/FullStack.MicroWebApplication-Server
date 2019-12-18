@@ -7,8 +7,10 @@ import com.groupfour.chatapp.chatapp.models.User;
 import com.groupfour.chatapp.chatapp.repositories.ChatRepository;
 import com.groupfour.chatapp.chatapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 
 
 @Service
@@ -42,7 +44,8 @@ public class UserService {
         return chatRepository.findAllByUsersContains(user);
     }
 
-    public User getUserByName(String name) throws ResourceNotFoundException{
+    public User getUserByUserName(String name) throws ResourceNotFoundException {
         return userRepository.findByUserName(name).orElseThrow(ResourceNotFoundException::new);
+
     }
 }
