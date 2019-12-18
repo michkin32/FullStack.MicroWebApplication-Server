@@ -17,7 +17,7 @@ public class Vote {
     @OneToOne
     private User voter;
 
-    public Long getVoteId(){
+    public Long getVoteId() {
         return voteId;
     }
 

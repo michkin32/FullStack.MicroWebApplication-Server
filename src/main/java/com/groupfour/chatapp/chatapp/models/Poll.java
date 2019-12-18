@@ -49,7 +49,7 @@ public class Poll {
         return pollId;
     }
 
-    public void addOptionToPoll(Option option)    {
+    public void addOptionToPoll(Option option) {
         options.add(option);
     }
 
@@ -73,7 +73,6 @@ public class Poll {
     public Set<Option> getOptions() {
         return options;
     }
-
 
 
     public void setOptions(Set<Option> options) {

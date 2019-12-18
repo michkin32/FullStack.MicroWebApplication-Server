@@ -3,7 +3,7 @@ package com.groupfour.chatapp.chatapp.exceptions;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus
-public class ResourceNotFoundException extends RuntimeException{
+public class ResourceNotFoundException extends RuntimeException {
 
 
     public ResourceNotFoundException() {

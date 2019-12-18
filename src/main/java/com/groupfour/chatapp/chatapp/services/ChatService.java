@@ -19,15 +19,15 @@ public class ChatService {
         this.userRepository = userRepository;
     }
 
-    public Chat getChatById(Long chatId)   {
+    public Chat getChatById(Long chatId) {
         return chatRepository.findById(chatId).get();
     }
 
-    public Chat getChatByName(String chatName)  {
+    public Chat getChatByName(String chatName) {
         return chatRepository.findByChatName(chatName);
     }
 
-    public Iterable<Chat> getAllChats()   {
+    public Iterable<Chat> getAllChats() {
         return chatRepository.findAll();
     }
 
@@ -51,7 +51,7 @@ public class ChatService {
         return chatRepository.save(chat);
     }
 
-    public Chat updateChatAdmin(Long chatId, Long newAdminId)    {
+    public Chat updateChatAdmin(Long chatId, Long newAdminId) {
         Chat chat = getChatById(chatId);
         User admin = userRepository.findById(newAdminId).get();
         chat.setAdmin(admin);
@@ -64,22 +64,6 @@ public class ChatService {
         chatRepository.delete(chat);
         return true;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

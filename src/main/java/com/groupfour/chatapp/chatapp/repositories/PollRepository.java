@@ -12,9 +12,9 @@ public interface PollRepository extends CrudRepository<Poll, Long> {
             "FROM Option o, Vote v " +
             "WHERE o.POLL_ID = ?1 " +
             "AND v.OPTION_ID = o.OPTION_ID", nativeQuery = true)
-Poll findPollByChatAndPoll(Long id,Long pollId);
+    Poll findPollByChatAndPoll(Long id, Long pollId);
 
-Iterable<Poll> findPollsByChat(Long id);
+    Iterable<Poll> findPollsByChat(Long id);
 
 Poll findPollByChat_ChatId(Long id);
 

@@ -37,7 +37,7 @@ public class MessageService {
     }
 
     public Iterable<Message> getMessagesByChatId(Long chatId) {
-       return messageRepository.findMessagesByDestinationChat_ChatId(chatId);
+        return messageRepository.findMessagesByDestinationChat_ChatId(chatId);
     }
 
     public Message updateMessageBody(Long messageId, Message newMessage) {
@@ -52,7 +52,7 @@ public class MessageService {
     }
 
     public Boolean messageExists(Long messageId) {
-        if(messageRepository.existsById(messageId))
+        if (messageRepository.existsById(messageId))
             return true;
         else
             return false;

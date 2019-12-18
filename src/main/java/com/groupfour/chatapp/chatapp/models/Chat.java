@@ -14,8 +14,10 @@ public class Chat {
     private String chatName;
     private Date timeStamp = new Date();
 
-    @ManyToOne User admin;
-    @ManyToMany Set<User> users = new HashSet<>();
+    @ManyToOne
+    User admin;
+    @ManyToMany
+    Set<User> users = new HashSet<>();
 
     public Chat() {
     }
