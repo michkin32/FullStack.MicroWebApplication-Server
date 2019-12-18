@@ -2,7 +2,7 @@ package com.groupfour.chatapp.chatapp.controllers;
 
 
 import com.groupfour.chatapp.chatapp.models.Vote;
-import com.groupfour.chatapp.chatapp.repositories.VoteRepository;
+import com.groupfour.chatapp.chatapp.services.PollService;
 import com.groupfour.chatapp.chatapp.services.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -11,35 +11,52 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+
+/**
+ * controller is responsible for handling
+ *      - incoming requests
+ *      - outgoing responses
+ *      - building response-headers
+ */
 @RestController
 public class VoteController {
-
-    private VoteRepository voteRepository;
-    private VoteService voteService;
+    private final PollService pollService;
+    private final VoteService voteService;
 
     @Autowired
-    public VoteController(VoteRepository voteRepository) {
-        this.voteRepository = voteRepository;
+    public VoteController(VoteService voteService, PollService pollService) {
+        this.voteService = voteService;
+        this.pollService = pollService;
     }
 
-    @RequestMapping(value = "/polls/{pollId}/votes", method = RequestMethod.POST)
-    public ResponseEntity<?> createVote(@PathVariable Long pollId, @RequestBody Vote vote) {
-        vote = voteRepository.save(vote);
-        // Set the headers for the newly created resource
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.setLocation(ServletUriComponentsBuilder.
-                fromCurrentRequest().path("/{id}").buildAndExpand(vote.getVoteId()).toUri());
-        return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
+    @RequestMapping(value = "/chats/{chatId}/polls/{pollId}/votes", method = RequestMethod.POST)
+    public ResponseEntity<Vote> createVote(
+            @PathVariable Long chatId,
+            @PathVariable Long pollId,
+            @RequestBody Vote vote) {
+        vote = voteService.create(chatId, pollId, vote);
+        HttpHeaders responseHeaders = new HttpHeaders(); // Set the headers for the newly created resource
+        responseHeaders.setLocation(ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(vote.getVoteId())
+                .toUri());
+        return new ResponseEntity<>(vote, responseHeaders, HttpStatus.CREATED);
+    }
+
+
+    @RequestMapping(value = "/chats/{chatId}/polls/{pollId}/votes", method = RequestMethod.GET)
+    public ResponseEntity<Vote> getVote(
+            @PathVariable Long chatId,
+            @PathVariable Long pollId) {
+        Vote vote = voteService.show(chatId, pollId);
+        return new ResponseEntity<>(vote, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/polls/votes", method = RequestMethod.GET)
     public Iterable<Vote> getAllVotes() {
-        return voteRepository.findAll();
-    }
+        return voteService.findAll();
 
-    @RequestMapping(value = "/polls/{pollId}/votes", method = RequestMethod.GET)
-    public Iterable<Vote> getVote(@PathVariable Long pollId) {
-        return voteRepository.findVotesByPoll(pollId);
     }
 
 

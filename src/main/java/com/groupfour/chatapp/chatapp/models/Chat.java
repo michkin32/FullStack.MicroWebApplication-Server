@@ -61,4 +61,8 @@ public class Chat {
     public Set<User> getUsers() {
         return users;
     }
+
+    public void setPoll(Long pollId, Poll poll) {
+
+    }
 }
