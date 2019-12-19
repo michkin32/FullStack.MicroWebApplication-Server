@@ -6,6 +6,9 @@ import com.groupfour.chatapp.chatapp.models.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,10 +21,18 @@ public class MessageController {
         this.messageService = messageService;
     }
 
+
+    @MessageMapping("/chat.sendMessage")
+    @SendTo("/topic/public")
+    public Message sendMessage(@Payload Message chatMessage) {
+        return chatMessage;
+    }
+
     @PostMapping("user/{userId}/chat/{chatId}/message")
     public ResponseEntity<Message> createMessageInChat(@PathVariable Long userId, @PathVariable Long chatId, @RequestBody Message message) {
         return new ResponseEntity<>(messageService.createMessageByChatId(userId, chatId, message), HttpStatus.CREATED);
     }
+
 
     @GetMapping("/chat/{chatId}/messages")
     public ResponseEntity<Iterable<Message>> getMessagesByChatId(@PathVariable Long chatId) {

@@ -23,7 +23,6 @@ public class Option {
     }
 
 
-
     public Long getOptionId() {
         return optionId;
     }
