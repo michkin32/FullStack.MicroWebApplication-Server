@@ -8,7 +8,7 @@ import java.util.Set;
 @Entity
 public class Chat {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long chatId;
 
     private String chatName;

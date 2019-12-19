@@ -1,20 +1,30 @@
 package com.groupfour.chatapp.chatapp.controllers;
-
-
 import com.groupfour.chatapp.chatapp.exceptions.ResourceNotFoundException;
+import com.groupfour.chatapp.chatapp.exceptions.securityExceptions.ValidationException;
 import com.groupfour.chatapp.chatapp.models.Chat;
 import com.groupfour.chatapp.chatapp.models.User;
 import com.groupfour.chatapp.chatapp.repositories.UserRepository;
+
 import com.groupfour.chatapp.chatapp.services.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.NoSuchAlgorithmException;
+import java.util.Map;
 
 @RestController
 public class UserController {
-    private UserService userService;
+
+
+    
     private UserRepository userRepository;
+    private UserService userService;
+    
+    
 
     @Autowired
     public UserController(UserRepository userRepository, UserService userService) {

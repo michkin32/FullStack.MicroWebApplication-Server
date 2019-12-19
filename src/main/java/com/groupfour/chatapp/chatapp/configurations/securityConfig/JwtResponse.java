@@ -1,4 +1,4 @@
-package com.groupfour.chatapp.chatapp.models.securityModel;
+package com.groupfour.chatapp.chatapp.configurations.securityConfig;
 
 import java.io.Serializable;
 
