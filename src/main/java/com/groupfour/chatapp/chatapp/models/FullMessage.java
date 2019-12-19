@@ -5,13 +5,20 @@ import truncatedmodels.TruncatedMessage;
 import javax.persistence.*;
 
 
-@MappedSuperclass
+@Entity
 public class FullMessage extends TruncatedMessage {
     @ManyToOne
     private User sender;
 
     @ManyToOne
     private Chat destinationChat;
+
+    public FullMessage(TruncatedMessage truncatedMessage) {
+        super();
+        super.setMessageBody(truncatedMessage.getMessageBody());
+        super.setTimeStamp(truncatedMessage.getTimeStamp());
+
+    }
 
     public FullMessage() {
         super();
