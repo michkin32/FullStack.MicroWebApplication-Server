@@ -55,4 +55,9 @@ public class VoteController {
     @RequestMapping(value = "/polls/votes", method = RequestMethod.GET)
     public ResponseEntity<Iterable<Vote>> getAllVotes( @PathVariable Long id) {
         return new ResponseEntity<>(voteService.findAll(id), HttpStatus.OK); }
+
+    @DeleteMapping(value = "/vote/{voteId}")
+    public ResponseEntity<Boolean> destroy(@PathVariable Long voteId) {
+        return new ResponseEntity<>(voteService.delete(voteId), HttpStatus.OK);
+    }
 }

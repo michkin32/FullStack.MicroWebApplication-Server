@@ -4,6 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
@@ -11,24 +15,50 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
 
-    private String userName;
+    @Column
+    private String username;
+
+    @Column
+    @JsonIgnore
     private String password;
+
+    @Column
     private String email;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "USER_ROLES", joinColumns = {
+            @JoinColumn(name = "USER_ID")}, inverseJoinColumns = {
+            @JoinColumn(name = "ROLE_ID")})
+    private Set roles;
+
 
     private Date timeStamp = new Date();
     private Integer activeStatus = 0;
 
+
     @OneToMany
     private Set<Message> messages;
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Set getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set roles) {
+        this.roles = roles;
+    }
 
     public User() {
     }
 
-    public User(String userName, String password, String email) {
-        this.userName = userName;
+    public User(String username, String password, String email) {
+        this.username = username;
         this.password = password;
         this.email = email;
     }
@@ -37,12 +67,12 @@ public class User {
         return userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
     public String getPassword() {

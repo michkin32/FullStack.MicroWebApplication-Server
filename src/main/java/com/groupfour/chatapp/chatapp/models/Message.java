@@ -25,7 +25,7 @@ public class Message {
     public Message() {
     }
 
-    public Message(String messageBody){
+    public Message(String messageBody) {
         this.messageBody = messageBody;
     }
 

@@ -55,4 +55,13 @@ public class VoteService {
         Poll poll = pollRepository.findById(pollId).get();
         return null;
     }
+
+    public Iterable<Vote> findVotesByPoll(Long pollId) {
+        return null;
+    }
+
+    public Boolean delete(Long id) {
+        voteRepository.deleteById(id);
+        return true;
+    }
 }
