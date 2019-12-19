@@ -1,7 +1,8 @@
 package com.groupfour.chatapp.chatapp.services.securityService;
 
 import com.groupfour.chatapp.chatapp.models.User;
-import com.groupfour.chatapp.chatapp.repositories.securityRepository.UserInfoRepository;
+import com.groupfour.chatapp.chatapp.repositories.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,13 +15,13 @@ import java.util.ArrayList;
 public class JwtUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserInfoRepository userInfoRepository;
+    private UserRepository userRepository;
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = userInfoRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }

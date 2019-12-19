@@ -24,11 +24,7 @@ public class User {
     @Column
     private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "USER_ROLES", joinColumns = {
-            @JoinColumn(name = "USER_ID")}, inverseJoinColumns = {
-            @JoinColumn(name = "ROLE_ID")})
-    private Set roles;
+
 
 
     private Date timeStamp = new Date();
@@ -42,13 +38,6 @@ public class User {
         this.userId = userId;
     }
 
-    public Set getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set roles) {
-        this.roles = roles;
-    }
 
     public User() {
     }

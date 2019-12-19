@@ -1,8 +1,9 @@
 package com.groupfour.chatapp.chatapp.controllers.securityController;
 
-import com.groupfour.chatapp.chatapp.configurations.securityConfig.JwtRequest;
-import com.groupfour.chatapp.chatapp.configurations.securityConfig.JwtResponse;
+
 import com.groupfour.chatapp.chatapp.configurations.securityConfig.JwtToken;
+import com.groupfour.chatapp.chatapp.models.securityModel.JwtRequest;
+import com.groupfour.chatapp.chatapp.models.securityModel.JwtResponse;
 import com.groupfour.chatapp.chatapp.services.securityService.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
