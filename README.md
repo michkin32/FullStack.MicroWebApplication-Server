@@ -2,14 +2,14 @@
 
 A Spring Boot api to provide endpoints for a real-time messaging platform
 
-### Instalation:
+### Installation:
 
 Build with maven 
 ``` mvn package ```
 
-Set enviorment variable for profile to either "in-memory" or "cloud"
+Set enviroment variable for profile to either "in-memory" or "cloud"
 
-How to export enviorment variables on Unix machines:
+How to export enviroment variables on Unix machines:
 ``` export spring_profil:in-memory ```
 
 If profile is set to cloud then set the database url, user, and password with the following enviorment variables:
