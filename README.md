@@ -15,8 +15,8 @@ A Spring Boot api to provide endpoints for a real-time messaging platform
 
 2. Set enviroment variable for profile to either "in-memory" or "cloud"
 
-- Command to set the profile to in-memory on Unix machines:``` export spring_profil=in-memory ```
-- Command to set the profile to cloud:``` export spring_profil=cloud ```
+- Command to set the profile to in-memory on Unix machines:``` export spring_profile=in-memory ```
+- Command to set the profile to cloud:``` export spring_profile=cloud ```
 
 3. If profile is set to cloud then set the database url, user, and password using the following enviorment variables:
 ```
