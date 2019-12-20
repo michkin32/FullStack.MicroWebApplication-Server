@@ -17,4 +17,4 @@ spring_datasource_username
 spring_datasource_password
 ```
 
-4. run the packaged jar
+4. run the packaged jar: ```java -jar build_name.jar```
