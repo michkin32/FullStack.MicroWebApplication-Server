@@ -2,6 +2,12 @@
 
 A Spring Boot api to provide endpoints for a real-time messaging platform
 
+### Requirements:
+- Java 8+ 
+- Maven
+-- Cloud Profile:
+--- Mariadb installation
+
 ### Installation:
 
 1. Build with maven: ``` mvn package ```
