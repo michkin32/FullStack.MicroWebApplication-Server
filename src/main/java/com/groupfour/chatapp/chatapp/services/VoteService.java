@@ -6,6 +6,7 @@ import com.groupfour.chatapp.chatapp.models.Vote;
 import com.groupfour.chatapp.chatapp.repositories.ChatRepository;
 import com.groupfour.chatapp.chatapp.repositories.PollRepository;
 import com.groupfour.chatapp.chatapp.repositories.VoteRepository;
+import org.dom4j.tree.DefaultEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.http.ResponseEntity;

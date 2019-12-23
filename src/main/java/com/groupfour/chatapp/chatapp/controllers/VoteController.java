@@ -57,7 +57,7 @@ public class VoteController {
         return new ResponseEntity<>(voteService.findAll(id), HttpStatus.OK); }
 
     @DeleteMapping(value = "/vote/{voteId}")
-    public ResponseEntity<Boolean> destroy(@PathVariable Long voteId) {
+    public ResponseEntity<Boolean> deleteVote(@PathVariable Long voteId) {
         return new ResponseEntity<>(voteService.delete(voteId), HttpStatus.OK);
     }
 }
