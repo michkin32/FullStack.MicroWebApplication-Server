@@ -1,5 +1,5 @@
 package com.groupfour.chatapp.chatapp.controllers;
-
+import com.groupfour.chatapp.chatapp.services.impl.FriendServiceImpl;
 import org.hibernate.HibernateException;
 import com.groupfour.chatapp.chatapp.models.Friend;
 import com.groupfour.chatapp.chatapp.repositories.FriendRepository;
@@ -18,10 +18,13 @@ public class FriendController {
     @Autowired
     private FriendService friendService;
 
+    @Autowired
+    private FriendServiceImpl friendServiceImpl;
+
     /* Get friends */
     @GetMapping("/friends")
     public List<Friend> getFriends() {
-        return friendService.list();
+        return friendServiceImpl.list();
     }
 
     /* Create friends */
@@ -30,7 +33,7 @@ public class FriendController {
         if (friend == null) {
             return new ResponseEntity<Friend>(HttpStatus.EXPECTATION_FAILED);
         } else {
-            friendService.create(friend);
+            friendServiceImpl.create(friend);
         }
         return new ResponseEntity<Friend>(friend, HttpStatus.OK);
     }
@@ -38,7 +41,7 @@ public class FriendController {
     /* Delete friends */
     @DeleteMapping("/friends/{id}")
     public ResponseEntity<Friend> deleteFriends(@PathVariable String id) {
-        if (null == friendService.delete(id)) {
+        if (null == friendServiceImpl.delete(id)) {
             return new ResponseEntity<Friend>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Friend>(HttpStatus.OK);
@@ -48,20 +51,20 @@ public class FriendController {
     @PutMapping("/friends/{id}")
     public ResponseEntity<Friend> updateFriends(
             @PathVariable("id") String custId, @RequestBody Friend friend) {
-        Friend friendById = friendService.findFriend(custId);
+        Friend friendById = friendServiceImpl.findFriend(custId);
         if (friendById == null) {
             return new ResponseEntity<Friend>(HttpStatus.NOT_FOUND);
         }
         friendById.setFirstName(friend.getFirstName());
         friendById.setLastName(friend.getLastName());
-        friendService.update(friendById);
+        friendServiceImpl.update(friendById);
         return new ResponseEntity<Friend>(friend, HttpStatus.OK);
     }
 
     /* Get friends By Id */
     @GetMapping("/friends/{id}")
     public ResponseEntity<Friend> getFriends(@PathVariable("id") String id) {
-        Friend friend = friendService.get(id);
+        Friend friend = friendServiceImpl.get(id);
         if (friend == null) {
             return new ResponseEntity<Friend>(HttpStatus.NOT_FOUND);
         }
@@ -78,11 +81,11 @@ public class FriendController {
 
         if ( firstName != null && !firstName.equalsIgnoreCase("") &&
                 lastName != null && !lastName.equalsIgnoreCase("")	){
-            friend = friendService.findFirstAndLastName(firstName, lastName);
+            friend = friendServiceImpl.findFirstAndLastName(firstName, lastName);
         } else if (firstName != null && !firstName.equalsIgnoreCase("")) {
-            friend = friendService.findFirstName(firstName);
+            friend = friendServiceImpl.findFirstName(firstName);
         } else if ( lastName != null && !lastName.equalsIgnoreCase("")) {
-            friend = friendService.findLastName(lastName);
+            friend = friendServiceImpl.findLastName(lastName);
         }
 
         return friend;
