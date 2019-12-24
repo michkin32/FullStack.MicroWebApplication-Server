@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Friend {
+public class Friend extends User {
 
     @GeneratedValue
     @Id

@@ -1,5 +1,6 @@
 package com.groupfour.chatapp.chatapp.services;
 
+import com.groupfour.chatapp.chatapp.Utils.HibernateUtil;
 import com.groupfour.chatapp.chatapp.models.Friend;
 import com.groupfour.chatapp.chatapp.repositories.FriendRepository;
 import com.groupfour.chatapp.chatapp.repositories.UserRepository;
@@ -43,10 +44,9 @@ public class FriendService {
     }
 
     /* Get Friend */
-    @Override
     public List<Friend> list() {
         List<Friend> friendList = null;
-        Session session = getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
             friendList = session.createCriteria(Friend.class).list();
@@ -64,7 +64,6 @@ public class FriendService {
     }
 
     /* Get Friend By Id */
-    @Override
     public Friend get(String id) {
         Friend friend = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -84,7 +83,6 @@ public class FriendService {
     }
 
     /* Create Friend */
-    @Override
     public Friend create(Friend friend) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
@@ -103,7 +101,6 @@ public class FriendService {
     }
 
     /* Delete Friend */
-    @Override
     public Friend delete(String id) {
         Friend friend = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -126,7 +123,6 @@ public class FriendService {
     }
 
     /* Update Friend */
-    @Override
     public Friend update(Friend friend) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
@@ -145,7 +141,6 @@ public class FriendService {
     }
 
     /* Find Friend By Id */
-    @Override
     public Friend findFriend(String custId) {
         Friend friend = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -165,7 +160,6 @@ public class FriendService {
     }
 
     /* Find friend by firstname and lastname */
-    @Override
     public List<Friend> findFirstAndLastName(String firstName, String lastName) {
         String query = null;
         List<Friend> friend = null;
@@ -183,8 +177,6 @@ public class FriendService {
         }
         return friend;
     }
-
-    @Override
     public List<Friend> findFirstName(String firstName) {
         String query = null;
         List<Friend> friend = null;
@@ -202,8 +194,6 @@ public class FriendService {
         }
         return friend;
     }
-
-    @Override
     public List<Friend> findLastName(String lastName) {
         String query = null;
         List<Friend> friend = null;
@@ -221,5 +211,4 @@ public class FriendService {
         }
         return friend;
     }
-
 }

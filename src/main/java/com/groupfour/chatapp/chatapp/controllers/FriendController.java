@@ -69,7 +69,7 @@ public class FriendController {
     }
 
     /* Get friends By Name */
-    @GetMapping("/friends/search")
+    @GetMapping("/friends")
     public List<Friend> findByQuery(
             @RequestParam(value = "first", required = false) String firstName,
             @RequestParam(value = "last", required = false) String lastName) {
