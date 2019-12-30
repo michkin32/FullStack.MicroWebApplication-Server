@@ -4,10 +4,7 @@ package com.groupfour.chatapp.chatapp.models;
 
 import com.groupfour.chatapp.chatapp.models.Message;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
@@ -18,7 +15,9 @@ public class User {
     @GeneratedValue
     private Long userId;
 
+    @Column(unique = true)
     private String userName;
+
     private String password;
     private String email;
 
