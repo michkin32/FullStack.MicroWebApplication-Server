@@ -20,7 +20,7 @@ public class ChatController {
         this.chatService = chatService;
     }
 
-    @GetMapping("/chat/{chatId}")
+    @GetMapping("/chats/{chatId}")
     public ResponseEntity<Chat> findChatBy(@PathVariable Long chatId) {
         try {
             verifyChatById(chatId);
@@ -30,7 +30,7 @@ public class ChatController {
         }
     }
 
-    @GetMapping("/chat")
+    @GetMapping("/chats/{chatName}")
     public ResponseEntity<Chat> findChatByName(@PathVariable String chatName) {
         try {
             verifyChatByName(chatName);
@@ -45,17 +45,17 @@ public class ChatController {
         return new ResponseEntity<>(chatService.getAllChats(), HttpStatus.OK);
     }
 
-    @PostMapping("/chat/{adminId}")
+    @PostMapping("/chats/{adminId}")
     public ResponseEntity<Chat> createNewChat(@RequestBody Chat chatName, @PathVariable Long adminId) {
         return new ResponseEntity<>(chatService.createNewChat(chatName, adminId), HttpStatus.CREATED);
     }
 
-    @PutMapping("/chat/{chatId}/user/{userId}")
+    @PutMapping("/chats/{chatId}/user/{userId}")
     public ResponseEntity<Chat> addUserToChat(@PathVariable Long chatId, @PathVariable Long userId) {
         return new ResponseEntity<>(chatService.addUserToChat(chatId, userId), HttpStatus.OK);
     }
 
-    @PatchMapping("/chat/{chatId}")
+    @PatchMapping("/chats/{chatId}")
     public ResponseEntity<Chat> updateChatName(@PathVariable Long chatId, @RequestBody String newChatName) {
         try {
             verifyChatById(chatId);
@@ -66,7 +66,7 @@ public class ChatController {
         }
     }
 
-    @PatchMapping("/chat/{chatId}/1")
+    @PatchMapping("/chats/{chatId}/1")
     public ResponseEntity<Chat> updateChatAdmin(@PathVariable Long chatId, @RequestBody Long newAdminId) {
         try {
             verifyChatById(chatId);
@@ -77,7 +77,7 @@ public class ChatController {
         }
     }
 
-    @DeleteMapping("/chat/{chatId}")
+    @DeleteMapping("/chats/{chatId}")
     public ResponseEntity<Boolean> deleteChat(@PathVariable Long chatId) {
         try {
             verifyChatById(chatId);
