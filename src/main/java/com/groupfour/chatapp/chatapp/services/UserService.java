@@ -9,6 +9,7 @@ import com.groupfour.chatapp.chatapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 
 
 @Service
@@ -45,4 +46,24 @@ public class UserService {
     public User getUserByName(String name) throws ResourceNotFoundException{
         return userRepository.findByUserName(name).orElseThrow(ResourceNotFoundException::new);
     }
+
+//    VVV Password Reset Methods VVV:
+
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email).get();
+    }
+
+    public User findUserByConfirmationToken(String confirmationToken) {
+        return userRepository.findByConfirmationToken(confirmationToken).orElseThrow(ResourceNotFoundException::new);
+    }
+
+    public User findUserByResetToken(String resetToken) {
+        return userRepository.findByResetToken(resetToken).get();
+    }
+
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
+
 }

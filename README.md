@@ -26,3 +26,12 @@ spring_datasource_password
 ```
 
 4. run the packaged jar: ```java -jar build_name.jar```
+
+
+
+
+
+##### Resources Used:  
+Security:  
+https://www.codebyamir.com/blog/user-account-registration-with-spring-boot
+ 
