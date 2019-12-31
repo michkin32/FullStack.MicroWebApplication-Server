@@ -12,6 +12,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class MessageController {
 
     private MessageService messageService;
@@ -27,6 +28,8 @@ public class MessageController {
     public Message sendMessage(@Payload Message chatMessage) {
         return chatMessage;
     }
+
+
     @PostMapping("user/{userId}/chat/{chatId}/message")
     public ResponseEntity<Message> createMessageInChat(@PathVariable Long userId, @PathVariable Long chatId, @RequestBody Message message) {
         return new ResponseEntity<>(messageService.createMessageByChatId(userId, chatId, message), HttpStatus.CREATED);

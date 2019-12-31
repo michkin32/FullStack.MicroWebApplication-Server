@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value="/polls")
+@CrossOrigin(origins = "http://localhost:4200")
 public class OptionController {
 
     private OptionService optionService;
