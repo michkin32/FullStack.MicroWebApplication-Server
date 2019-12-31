@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
@@ -64,6 +66,19 @@ public class UserController {
     public ResponseEntity<Boolean> deleteUser(@PathVariable Long userId) {
         userRepository.deleteById(userId);
         return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/user/savePassword", method = RequestMethod.POST)
+    @ResponseBody
+    public GenericResponse savePassword(Locale locale,
+                                        @Valid PasswordDto passwordDto) {
+        User user =
+                (User) SecurityContextHolder.getContext()
+                        .getAuthentication().getPrincipal();
+
+        userService.changeUserPassword(user, passwordDto.getNewPassword());
+        return new GenericResponse(
+                messages.getMessage("message.resetPasswordSuc", null, locale));
     }
 
 }
