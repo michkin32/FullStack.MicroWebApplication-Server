@@ -1,24 +1,36 @@
 package com.groupfour.chatapp.chatapp.controllers;
 
-import com.groupfour.chatapp.chatapp.exceptions.ResourceNotFoundException;
+
 import com.groupfour.chatapp.chatapp.models.User;
 import com.groupfour.chatapp.chatapp.services.EmailService;
 import com.groupfour.chatapp.chatapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+
 import java.util.Map;
 import java.util.UUID;
 
-@Controller
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
+
+import org.springframework.validation.BindingResult;
+
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+
+import com.nulabinc.zxcvbn.Strength;
+import com.nulabinc.zxcvbn.Zxcvbn;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+@RestController
 public class RegisterController {
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -27,7 +39,6 @@ public class RegisterController {
 
     @Autowired
     public RegisterController(BCryptPasswordEncoder bCryptPasswordEncoder, UserService userService, EmailService emailService) {
-
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userService = userService;
         this.emailService = emailService;
@@ -110,7 +121,7 @@ public class RegisterController {
 
         Zxcvbn passwordCheck = new Zxcvbn();
 
-        Strength strength = passwordCheck.measure(requestParams.get("password"));
+        Strength strength = passwordCheck.measure((CharSequence) requestParams.get("password"));
 
         if (strength.getScore() < 3) {
             bindingResult.reject("password");
@@ -123,10 +134,10 @@ public class RegisterController {
         }
 
         // Find the user associated with the reset token
-        User user = userService.findUserByConfirmationToken(requestParams.get("token"));
+        User user = userService.findUserByConfirmationToken((String) requestParams.get("token"));
 
         // Set new password
-        user.setPassword(bCryptPasswordEncoder.encode(requestParams.get("password")));
+        user.setPassword(bCryptPasswordEncoder.encode((CharSequence) requestParams.get("password")));
 
         // Set user to enabled
         user.setEnabled(true);

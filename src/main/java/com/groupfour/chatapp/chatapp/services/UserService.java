@@ -7,23 +7,26 @@ import com.groupfour.chatapp.chatapp.models.User;
 import com.groupfour.chatapp.chatapp.repositories.ChatRepository;
 import com.groupfour.chatapp.chatapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 
-@Service
+@Service("userService")
 public class UserService {
     final private Long defaultChatId = 1L;
 
     private UserRepository userRepository;
     private ChatRepository chatRepository;
 
+
+
     @Autowired
     public UserService(UserRepository userRepository, ChatRepository chatRepository) {
-
         this.userRepository = userRepository;
         this.chatRepository = chatRepository;
+
 
         if (!chatRepository.existsById(defaultChatId)) {
             chatRepository.save(new Chat("Default"));
