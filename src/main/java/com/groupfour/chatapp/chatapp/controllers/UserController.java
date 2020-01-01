@@ -12,22 +12,27 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@RestController("userController")
 public class UserController {
+
     private UserService userService;
     private UserRepository userRepository;
 
+
     @Autowired
-    public UserController(UserRepository userRepository, UserService userService) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<User> getUser(@PathVariable Long userId) {
-        User user = userRepository.findById(userId).get();
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        try {
+            return new ResponseEntity(userService.getUserById(userId), HttpStatus.OK);
+        }   catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
     @GetMapping("/user/{userId}/chats")
     public ResponseEntity<Iterable<Chat>> getUserChats(@PathVariable Long userId) {
@@ -52,18 +57,18 @@ public class UserController {
         }
     }
 
-    @PutMapping("/user/{userId}")
-    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User user) {
-        User existingUser = userRepository.findById(userId).get();
-        existingUser.setEmail(user.getEmail());
-        existingUser.setPassword(user.getPassword());
-        return new ResponseEntity<>(userRepository.save(existingUser), HttpStatus.CREATED);
-    }
-
-    @DeleteMapping("/user/{userId}")
-    public ResponseEntity<Boolean> deleteUser(@PathVariable Long userId) {
-        userRepository.deleteById(userId);
-        return new ResponseEntity<>(true, HttpStatus.OK);
-    }
+//    @PutMapping("/user/{userId}")
+//    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User user) {
+//        User existingUser = userRepository.findById(userId).get();
+//        existingUser.setEmail(user.getEmail());
+//        existingUser.setPassword(user.getPassword());
+//        return new ResponseEntity<>(userRepository.save(existingUser), HttpStatus.CREATED);
+//    }
+//
+//    @DeleteMapping("/user/{userId}")
+//    public ResponseEntity<Boolean> deleteUser(@PathVariable Long userId) {
+//        userRepository.deleteById(userId);
+//        return new ResponseEntity<>(true, HttpStatus.OK);
+//    }
 
 }

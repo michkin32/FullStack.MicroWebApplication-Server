@@ -1,26 +1,17 @@
 package com.groupfour.chatapp.chatapp.controllers;
 
-import com.groupfour.chatapp.chatapp.exceptions.ResourceNotFoundException;
-
 import com.groupfour.chatapp.chatapp.models.User;
 import com.groupfour.chatapp.chatapp.services.EmailService;
 import com.groupfour.chatapp.chatapp.services.UserService;
+import com.nulabinc.zxcvbn.Strength;
+import com.nulabinc.zxcvbn.Zxcvbn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-
-
-import java.util.Map;
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,10 +22,7 @@ import javax.validation.Valid;
 import java.util.Map;
 import java.util.UUID;
 
-import com.nulabinc.zxcvbn.Strength;
-import com.nulabinc.zxcvbn.Zxcvbn;
-
-@RequestMapping
+@RestController
 public class RegisterController {
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -42,7 +30,8 @@ public class RegisterController {
     private EmailService emailService;
 
     @Autowired
-    public RegisterController(BCryptPasswordEncoder bCryptPasswordEncoder, UserService userService, EmailService emailService) {
+    public RegisterController(BCryptPasswordEncoder bCryptPasswordEncoder,
+                              UserService userService, EmailService emailService) {
 
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userService = userService;
@@ -62,7 +51,7 @@ public class RegisterController {
     public ModelAndView processRegistrationForm(ModelAndView modelAndView, @Valid User user, BindingResult bindingResult, HttpServletRequest request) {
 
         // Lookup user in database by e-mail
-        User userExists = userService.findUserByEmail(user.getEmail());
+        User userExists = (User) userService.findUserByEmail(user.getEmail());
 
         System.out.println(userExists);
 

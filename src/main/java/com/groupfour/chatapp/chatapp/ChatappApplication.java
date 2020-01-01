@@ -2,16 +2,19 @@ package com.groupfour.chatapp.chatapp;
 
 import com.groupfour.chatapp.chatapp.property.FileStorageProperties;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Properties;
 
 @SpringBootApplication
+
 @EnableConfigurationProperties({
 		FileStorageProperties.class
 })
@@ -38,7 +41,15 @@ public class ChatappApplication {
 		props.put("mail.debug", "true");
 
 		return mailSender;
+	}
+
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+		return bCryptPasswordEncoder;
+	}
+
 
 	}
 
-}
+

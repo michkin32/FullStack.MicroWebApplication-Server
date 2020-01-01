@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 
-@Service
+@Service("userService")
 public class UserService {
     final private Long defaultChatId = 1L;
 
@@ -21,13 +21,12 @@ public class UserService {
 
     @Autowired
     public UserService(UserRepository userRepository, ChatRepository chatRepository) {
-
         this.userRepository = userRepository;
         this.chatRepository = chatRepository;
 
-        if (!chatRepository.existsById(defaultChatId)) {
-            chatRepository.save(new Chat("Default"));
-        }
+//        if (!chatRepository.existsById(defaultChatId)) {
+//            chatRepository.save(new Chat("Default"));
+//        }
     }
 
     public User createUser(User user) {
@@ -41,6 +40,10 @@ public class UserService {
     public Iterable<Chat> getUserChats(Long userId) throws ResourceNotFoundException {
         User user = userRepository.findById(userId).orElseThrow(ResourceNotFoundException::new);
         return chatRepository.findAllByUsersContains(user);
+    }
+
+    public User getUserById(Long userId)    {
+        return userRepository.findById(userId).orElseThrow(ResourceNotFoundException::new);
     }
 
     public User getUserByName(String name) throws ResourceNotFoundException{
