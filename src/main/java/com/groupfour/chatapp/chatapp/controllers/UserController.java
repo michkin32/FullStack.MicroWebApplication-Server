@@ -32,7 +32,7 @@ public class UserController {
     @GetMapping("/user/{userId}/chats")
     public ResponseEntity<Iterable<Chat>> getUserChats(@PathVariable Long userId) {
         try {
-            return new ResponseEntity(userService.getUserChats(userId), HttpStatus.OK);
+            return new ResponseEntity<>(userService.getUserChats(userId), HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

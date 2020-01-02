@@ -18,8 +18,10 @@ public class User {
     @Column(unique = true)
     private String userName;
 
-    private String password;
+    @Column(unique = true)
     private String email;
+
+    private String password;
 
     private Date timeStamp = new Date();
     private Integer activeStatus = 0;
