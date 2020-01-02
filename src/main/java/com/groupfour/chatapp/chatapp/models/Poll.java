@@ -1,5 +1,7 @@
 package com.groupfour.chatapp.chatapp.models;
 
+import org.aspectj.weaver.patterns.TypePatternQuestions;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -16,11 +18,11 @@ public class Poll {
     @Column(name = "QUESTION")
     private String pollQuestion;
 
-    private Date timeStamp;
+    private Date timeStamp = new Date();
     @JoinColumn(name = "POLL_ID")
     @Size(max = 3)
     @OrderBy
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Option> options;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -32,6 +34,11 @@ public class Poll {
 
     @ManyToOne
     private User pollCreator;
+
+    public Poll(String question, Set<Option> options){
+        this.pollQuestion = question;
+        this.options = options;
+    }
 
     public void setPollId(Long pollId) {
         this.pollId = pollId;
