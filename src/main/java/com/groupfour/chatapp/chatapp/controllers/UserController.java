@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
 public class UserController {
     private UserService userService;
@@ -31,7 +32,7 @@ public class UserController {
     @GetMapping("/user/{userId}/chats")
     public ResponseEntity<Iterable<Chat>> getUserChats(@PathVariable Long userId) {
         try {
-            return new ResponseEntity(userService.getUserChats(userId), HttpStatus.OK);
+            return new ResponseEntity<>(userService.getUserChats(userId), HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
