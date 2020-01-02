@@ -1,6 +1,5 @@
 package com.groupfour.chatapp.chatapp.services;
 
-
 import com.groupfour.chatapp.chatapp.models.Message;
 import com.groupfour.chatapp.chatapp.repositories.ChatRepository;
 import com.groupfour.chatapp.chatapp.repositories.MessageRepository;
