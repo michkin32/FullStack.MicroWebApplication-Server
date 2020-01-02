@@ -29,7 +29,7 @@ public class PollController {
     }
 
     @PostMapping("/poll/{pollId}")
-    public ResponseEntity<Poll> getPollByPollId(Long pollId) {
+    public ResponseEntity<Poll> getPollByPollId(@PathVariable Long pollId) {
         try {
             verifyPollById(pollId);
             return new ResponseEntity<>(pollService.getPollById(pollId), HttpStatus.OK);
@@ -39,7 +39,7 @@ public class PollController {
     }
 
     @PatchMapping("/poll/{pollId}")
-    public ResponseEntity<Poll> addOptionToPoll(Long pollId, Long optionId) {
+    public ResponseEntity<Poll> addOptionToPoll(@PathVariable Long pollId, Long optionId) {
         try {
             verifyPollById(pollId);
             return new ResponseEntity<>(pollService.addOptionToPoll(pollId, optionId), HttpStatus.OK);
