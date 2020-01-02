@@ -12,6 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+import java.util.Base64;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController("userController")
 public class UserController {
@@ -48,16 +52,7 @@ public class UserController {
         return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
     }
 
-    @GetMapping("/user/{userName}/login")
-    public ResponseEntity<User> loginUser(@PathVariable String userName) {
-        try {
-            return new ResponseEntity<>(userService.getUserByName(userName), HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-//    @PutMapping("/user/{userId}")
+    //    @PutMapping("/user/{userId}")
 //    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User user) {
 //        User existingUser = userRepository.findById(userId).get();
 //        existingUser.setEmail(user.getEmail());
@@ -70,5 +65,33 @@ public class UserController {
 //        userRepository.deleteById(userId);
 //        return new ResponseEntity<>(true, HttpStatus.OK);
 //    }
+
+
+//    -------------------------- Login Methods ------------------------------
+
+    @GetMapping("/user/{userName}/login")
+    public ResponseEntity<User> loginUser(@PathVariable String userName) {
+        try {
+            return new ResponseEntity<>(userService.getUserByName(userName), HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping("/login")
+    public boolean login(@RequestBody User user) {
+        return
+                user.getUserName().equals("user") && user.getPassword().equals("password");
+    }
+
+    @RequestMapping("/user")
+    public Principal user(HttpServletRequest request) {
+        String authToken = request.getHeader("Authorization")
+                .substring("Basic".length()).trim();
+        return () ->  new String(Base64.getDecoder()
+                .decode(authToken)).split(":")[0];
+    }
+
+
 
 }
