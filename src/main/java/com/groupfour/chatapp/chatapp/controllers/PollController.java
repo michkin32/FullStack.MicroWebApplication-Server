@@ -6,6 +6,7 @@ import com.groupfour.chatapp.chatapp.repositories.PollRepository;
 import com.groupfour.chatapp.chatapp.services.PollService;
 import com.groupfour.chatapp.chatapp.services.ChatService;
 import com.groupfour.chatapp.chatapp.exceptions.ResourceNotFoundException;
+import com.groupfour.chatapp.chatapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,9 @@ public class PollController {
 
     @Autowired
     private ChatService chatService;
+
+    @Autowired
+    private UserService userService;
 
 
     @Autowired
@@ -59,8 +63,9 @@ public class PollController {
        return new ResponseEntity<>(pollService.show(id, pollId), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/chat/polls", method=RequestMethod.POST)
-    public ResponseEntity<?> createPoll(@Valid @RequestBody Poll poll) {
+    @RequestMapping(value="/chat/{adminId}/polls", method=RequestMethod.POST)
+    public ResponseEntity<?> createPoll(@Valid @RequestBody Poll poll, @PathVariable Long adminId) {
+        poll.setPollCreator(userService.);
         poll = pollService.create(poll);
         return new ResponseEntity<>(pollService.create(poll), HttpStatus.CREATED);
     }
