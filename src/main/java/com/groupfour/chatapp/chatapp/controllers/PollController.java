@@ -32,7 +32,7 @@ public class PollController {
         this.pollService = pollService;
     }
 
-    @PostMapping("/poll/{pollId}")
+    @PutMapping("/poll/{pollId}")
     public ResponseEntity<Poll> getPollByPollId(@PathVariable Long pollId) {
         try {
             verifyPollById(pollId);
@@ -63,9 +63,10 @@ public class PollController {
        return new ResponseEntity<>(pollService.show(id, pollId), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/chat/{adminId}/polls", method=RequestMethod.POST)
-    public ResponseEntity<?> createPoll(@Valid @RequestBody Poll poll, @PathVariable Long adminId) {
-        poll.setPollCreator(userService.);
+    @RequestMapping(value="/chat/{chatId}/polls", method=RequestMethod.POST)
+    public ResponseEntity<?> createPoll(@Valid @RequestBody Poll poll, @PathVariable Long chatId) {
+        poll.setChat(chatService.getChatById(chatId));
+        poll.setPollCreator(poll.getChat().getAdmin());
         poll = pollService.create(poll);
         return new ResponseEntity<>(pollService.create(poll), HttpStatus.CREATED);
     }

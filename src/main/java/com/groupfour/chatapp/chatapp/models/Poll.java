@@ -24,6 +24,8 @@ public class Poll {
     @JoinColumn(name = "POLL_ID")
     @OrderBy
     private Set<Vote> votes;
+    @ManyToOne
+    private Chat chat;
 
     @ManyToOne
     private User pollCreator;
@@ -40,8 +42,7 @@ public class Poll {
         this.chat = chat;
     }
 
-    @ManyToOne
-    private Chat chat;
+
 
     public Long getPollId() {
         return pollId;
