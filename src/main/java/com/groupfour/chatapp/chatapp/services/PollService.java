@@ -41,7 +41,9 @@ public class PollService {
     }
 
     public Poll create(Poll poll) {
-        return pollRepository.save(poll);
+        Poll newPoll = pollRepository.save(poll);
+
+        return newPoll;
     }
 
     public Poll addOptionToPoll(Long pollId, Long optionId) {

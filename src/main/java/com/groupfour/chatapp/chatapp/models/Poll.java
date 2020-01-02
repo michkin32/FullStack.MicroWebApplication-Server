@@ -1,6 +1,7 @@
 package com.groupfour.chatapp.chatapp.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.Set;
 
@@ -16,11 +17,13 @@ public class Poll {
     private String pollQuestion;
 
     private Date timeStamp;
-
+    @JoinColumn(name = "POLL_ID")
+    @Size(max = 3)
+    @OrderBy
     @OneToMany
     private Set<Option> options;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "POLL_ID")
     @OrderBy
     private Set<Vote> votes;

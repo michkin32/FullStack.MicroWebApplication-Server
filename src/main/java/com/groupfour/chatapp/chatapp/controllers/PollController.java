@@ -20,7 +20,7 @@ public class PollController {
     private PollService pollService;
     private PollRepository pollRepository;
 
-    @Autowired
+
     private ChatService chatService;
 
     @Autowired
@@ -28,7 +28,8 @@ public class PollController {
 
 
     @Autowired
-    public PollController(PollService pollService) {
+    public PollController(PollService pollService, ChatService chatService) {
+        this.chatService = chatService;
         this.pollService = pollService;
     }
 
@@ -63,16 +64,16 @@ public class PollController {
        return new ResponseEntity<>(pollService.show(id, pollId), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/chat/{chatId}/polls", method=RequestMethod.POST)
-    public ResponseEntity<?> createPoll(@Valid @RequestBody Poll poll, @PathVariable Long chatId) {
-        poll.setChat(chatService.getChatById(chatId));
+    @RequestMapping(value="/chat/{chatName}/polls", method=RequestMethod.POST)
+    public ResponseEntity<?> createPoll(@RequestBody Poll poll, @PathVariable String chatName) {
+        poll.setChat(chatService.getChatByName(chatName));
         poll.setPollCreator(poll.getChat().getAdmin());
         poll = pollService.create(poll);
         return new ResponseEntity<>(pollService.create(poll), HttpStatus.CREATED);
     }
 
     @RequestMapping(value="/chat/{id}/polls", method=RequestMethod.PUT)
-    public ResponseEntity<?> updatePoll(@Valid @RequestBody Poll poll,@PathVariable Long id, @PathVariable Long pollId) {
+    public ResponseEntity<?> updatePoll(@RequestBody Poll poll,@PathVariable Long id, @PathVariable Long pollId) {
         return new ResponseEntity<>(pollService.update(pollId,poll), HttpStatus.CREATED);
     }
     @RequestMapping(value="/chat/{id}/polls", method=RequestMethod.DELETE)
