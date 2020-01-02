@@ -1,8 +1,6 @@
 package com.groupfour.chatapp.chatapp.controllers;
 import com.groupfour.chatapp.chatapp.services.impl.FriendServiceImpl;
-import org.hibernate.HibernateException;
 import com.groupfour.chatapp.chatapp.models.Friend;
-import com.groupfour.chatapp.chatapp.repositories.FriendRepository;
 import com.groupfour.chatapp.chatapp.services.FriendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
