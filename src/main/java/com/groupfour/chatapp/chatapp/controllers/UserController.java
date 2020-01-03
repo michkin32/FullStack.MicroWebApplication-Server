@@ -3,19 +3,17 @@ package com.groupfour.chatapp.chatapp.controllers;
 
 
 import com.groupfour.chatapp.chatapp.exceptions.ResourceNotFoundException;
-import com.groupfour.chatapp.chatapp.models.Chat;
+
 import com.groupfour.chatapp.chatapp.models.User;
 import com.groupfour.chatapp.chatapp.models.UserDto;
 import com.groupfour.chatapp.chatapp.repositories.UserRepository;
 import com.groupfour.chatapp.chatapp.services.UserService;
-import org.modelmapper.ModelMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
-import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
@@ -36,7 +34,7 @@ public class UserController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public User saveUser(@RequestBody UserDto userDto)  {
-        return userRepository.save(user);
+        return userRepository.save(userDto);
     }
 
     @GetMapping("/user")
