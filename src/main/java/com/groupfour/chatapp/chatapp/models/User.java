@@ -6,23 +6,22 @@ import com.groupfour.chatapp.chatapp.models.Message;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Column(unique = true)
+    @Embedded
+    private UserCredentials userCredentials;
+
+    @Column(name = "user_name")
     private String userName;
-
-    @Column(unique = true)
     private String email;
-
-    private String password;
-
     private Date timeStamp = new Date();
     private Integer activeStatus = 0;
 
@@ -30,13 +29,37 @@ public class User {
     private Set<Message> messages;
 
 
-    public User() {
+    protected User() {
     }
 
-    public User(String userName, String password, String email) {
-        this.userName = userName;
-        this.password = password;
-        this.email = email;
+    public User(UserCredentials userCredentials)    {
+        this.userCredentials = userCredentials;
+    }
+
+    public UserCredentials getUserCredentials() {
+        return userCredentials;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(userId, user.userId) &&
+                Objects.equals(userCredentials, user.userCredentials);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, userCredentials);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + userId +
+                ", userCredentials=" + userCredentials +
+                '}';
     }
 
 
@@ -52,13 +75,6 @@ public class User {
         this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getEmail() {
         return email;

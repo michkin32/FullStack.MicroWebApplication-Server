@@ -12,8 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
-@RestController
+
+@RequestMapping("/users")
 public class UserController {
     private UserService userService;
     private UserRepository userRepository;
@@ -24,41 +24,34 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PostMapping
+    public User register(@RequestBody User user) {
+        return userService.register(user);
+    }
+
     @GetMapping("/user/{userId}")
     public ResponseEntity<User> getUser(@PathVariable Long userId) {
         User user = userRepository.findById(userId).get();
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
-    @GetMapping("/user/{userId}/chats")
-    public ResponseEntity<Iterable<Chat>> getUserChats(@PathVariable Long userId) {
-        try {
-            return new ResponseEntity<>(userService.getUserChats(userId), HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
 
-    @PostMapping("/user")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
-    }
 
-    @GetMapping("/user/{userName}/login")
-    public ResponseEntity<User> loginUser(@PathVariable String userName) {
-        try {
-            return new ResponseEntity<>(userService.getUserByName(userName), HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+//    These seem like they should be in chatController
+//    @GetMapping("/user/{userId}/chats")
+//    public ResponseEntity<Iterable<Chat>> getUserChats(@PathVariable Long userId) {
+//        try {
+//            return new ResponseEntity<>(userService.getUserChats(userId), HttpStatus.OK);
+//        } catch (ResourceNotFoundException e) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
+//
+//    @PostMapping("/user")
+//    public ResponseEntity<User> createUser(@RequestBody User user) {
+//        return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
+//    }
 
-    @PutMapping("/user/{userId}")
-    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User user) {
-        User existingUser = userRepository.findById(userId).get();
-        existingUser.setEmail(user.getEmail());
-        existingUser.setPassword(user.getPassword());
-        return new ResponseEntity<>(userRepository.save(existingUser), HttpStatus.CREATED);
-    }
+
 
     @DeleteMapping("/user/{userId}")
     public ResponseEntity<Boolean> deleteUser(@PathVariable Long userId) {
