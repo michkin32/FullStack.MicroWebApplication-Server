@@ -37,10 +37,12 @@ public class UserService {
         return savedUser;
     }
 
-    public Iterable<Chat> getUserChats(Long userId) throws ResourceNotFoundException {
-        User user = userRepository.findById(userId).orElseThrow(ResourceNotFoundException::new);
-        return chatRepository.findAllByUsersContains(user);
-    }
+//    The below method seems like it should be in chatService.
+
+//    public Iterable<Chat> getUserChats(Long userId) throws ResourceNotFoundException {
+//        User user = userRepository.findById(userId).orElseThrow(ResourceNotFoundException::new);
+//        return chatRepository.findAllByUsersContains(user);
+//    }
 
     public User getUserByName(String name) throws ResourceNotFoundException{
         return userRepository.findByUserName(name).orElseThrow(ResourceNotFoundException::new);
@@ -48,4 +50,5 @@ public class UserService {
     public User getUserById(Long id) throws ResourceNotFoundException{
         return userRepository.findByUserId(id).orElseThrow(ResourceNotFoundException::new);
     }
+
 }

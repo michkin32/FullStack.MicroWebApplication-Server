@@ -5,23 +5,43 @@ package com.groupfour.chatapp.chatapp.controllers;
 import com.groupfour.chatapp.chatapp.exceptions.ResourceNotFoundException;
 import com.groupfour.chatapp.chatapp.models.Chat;
 import com.groupfour.chatapp.chatapp.models.User;
+import com.groupfour.chatapp.chatapp.models.UserDto;
 import com.groupfour.chatapp.chatapp.repositories.UserRepository;
 import com.groupfour.chatapp.chatapp.services.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
 public class UserController {
+
+
     private UserService userService;
     private UserRepository userRepository;
+
+
 
     @Autowired
     public UserController(UserRepository userRepository, UserService userService) {
         this.userRepository = userRepository;
         this.userService = userService;
+
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public User saveUser(@RequestBody UserDto userDto)  {
+        return userRepository.save(user);
+    }
+
+    @GetMapping("/user")
+    public Iterable<User> listUser() {
+        return userRepository.findAll();
     }
 
     @GetMapping("/user/{userId}")
@@ -29,14 +49,16 @@ public class UserController {
         User user = userRepository.findById(userId).get();
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
-    @GetMapping("/user/{userId}/chats")
-    public ResponseEntity<Iterable<Chat>> getUserChats(@PathVariable Long userId) {
-        try {
-            return new ResponseEntity<>(userService.getUserChats(userId), HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+
+//    Seems like it should be in chats
+//    @GetMapping("/user/{userId}/chats")
+//    public ResponseEntity<Iterable<Chat>> getUserChats(@PathVariable Long userId) {
+//        try {
+//            return new ResponseEntity<>(userService.getUserChats(userId), HttpStatus.OK);
+//        } catch (ResourceNotFoundException e) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
 
     @PostMapping("/user")
     public ResponseEntity<User> createUser(@RequestBody User user) {
@@ -65,5 +87,7 @@ public class UserController {
         userRepository.deleteById(userId);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
+
+
 
 }

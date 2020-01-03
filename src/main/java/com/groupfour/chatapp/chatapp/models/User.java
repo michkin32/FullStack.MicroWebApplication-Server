@@ -2,6 +2,7 @@ package com.groupfour.chatapp.chatapp.models;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.groupfour.chatapp.chatapp.models.Message;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long userId;
 
     @Column(unique = true)
@@ -20,7 +21,8 @@ public class User {
 
     @Column(unique = true)
     private String email;
-
+    @Column
+    @JsonIgnore
     private String password;
 
     private Date timeStamp = new Date();
