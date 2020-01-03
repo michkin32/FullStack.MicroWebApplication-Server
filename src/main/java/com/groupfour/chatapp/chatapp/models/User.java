@@ -4,9 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
@@ -32,8 +30,8 @@ public class User {
     @JoinTable(name = "USER_ROLES", joinColumns = {
             @JoinColumn(name = "USER_ID")}, inverseJoinColumns = {
             @JoinColumn(name = "ROLE_ID")})
-    private Set roles;
 
+    private Set roles;
 
     private Date timeStamp = new Date();
     private Integer activeStatus = 0;

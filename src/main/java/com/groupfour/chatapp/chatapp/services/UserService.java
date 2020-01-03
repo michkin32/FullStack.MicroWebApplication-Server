@@ -48,4 +48,7 @@ public class UserService {
         return userRepository.findByUserName(name).orElseThrow(ResourceNotFoundException::new);
 
     }
+    public User getUserById(Long id) throws ResourceNotFoundException{
+        return userRepository.findByUserId(id).orElseThrow(ResourceNotFoundException::new);
+    }
 }

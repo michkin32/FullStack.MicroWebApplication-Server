@@ -11,16 +11,7 @@ public class Option {
 
     private String optionName;
 
-    @ManyToOne
-    private Poll poll;
 
-    public Poll getPoll() {
-        return poll;
-    }
-
-    public void setPoll(Poll poll) {
-        this.poll = poll;
-    }
 
 
     public Long getOptionId() {

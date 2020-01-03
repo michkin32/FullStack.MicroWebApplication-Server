@@ -24,6 +24,27 @@ public class OptionService {
     public Option createNewOption(Option newOption) {
         return optionRepository.save(newOption);
     }
-
-
 }
+//@Service
+//public class OptionService {
+//
+//    private OptionRepository optionRepository;
+//    private PollRepository pollRepository;
+//
+//    @Autowired
+//    public OptionService(OptionRepository optionRepository) {
+//        this.optionRepository = optionRepository;
+//    }
+//
+//    public Option getOptionById(Long optionId)  {
+//        return optionRepository.findById(optionId).get();
+//    }
+//
+//    public Option createNewOption(Option newOption) {
+//        return optionRepository.save(newOption);
+//    }
+//
+//
+//
+//
+//}
