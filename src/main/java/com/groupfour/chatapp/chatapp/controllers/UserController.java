@@ -12,8 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
-@RequestMapping(value = "/users")
+@RestController
+@RequestMapping
 public class UserController {
     private UserService userService;
     private UserRepository userRepository;
@@ -24,12 +24,12 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
+    @PostMapping("/api/users")
     public User register(@RequestBody User user) {
         return userService.register(user);
     }
 
-    @GetMapping("/user/{userId}")
+    @GetMapping("/api/users/{userId}")
     public ResponseEntity<User> getUser(@PathVariable Long userId) {
         User user = userRepository.findById(userId).get();
         return new ResponseEntity<>(user, HttpStatus.OK);
@@ -53,7 +53,7 @@ public class UserController {
 
 
 
-    @DeleteMapping("/user/{userId}")
+    @DeleteMapping("/api/users/{userId}")
     public ResponseEntity<Boolean> deleteUser(@PathVariable Long userId) {
         userRepository.deleteById(userId);
         return new ResponseEntity<>(true, HttpStatus.OK);

@@ -1,11 +1,9 @@
 package com.groupfour.chatapp.chatapp.configurations;
 
 
-import com.groupfour.chatapp.chatapp.security.TokenProperties;
-import com.groupfour.chatapp.chatapp.security.AuthenticationFilter;
-import com.groupfour.chatapp.chatapp.security.AuthorizationFilter;
-import com.groupfour.chatapp.chatapp.security.CustomUserDetailsService;
+import com.groupfour.chatapp.chatapp.security.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.session.SessionManagementFilter;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -50,11 +49,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterAfter(new AuthorizationFilter(tokenProperties), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, tokenProperties.getLoginPath()).permitAll()
-                .antMatchers(HttpMethod.POST, "/users").permitAll()
-                .antMatchers("/users/**").hasRole("ADMIN")
-                .antMatchers("/**").authenticated()
+                .antMatchers(HttpMethod.POST, "/api/users").permitAll()
+//                .antMatchers("/api/users/**").hasRole("ADMIN")
+                .antMatchers("/api/**").authenticated()
                 .anyRequest().permitAll();
+
+
     }
+
+
+
 
     private HttpSecurity applyCors(HttpSecurity httpSecurity) throws Exception {
         if (corsEnabled) {
