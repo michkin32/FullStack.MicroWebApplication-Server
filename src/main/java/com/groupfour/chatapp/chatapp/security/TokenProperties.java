@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "security.jwt")
 public class TokenProperties {
 
-    private String loginPath = "//login";
+    private String loginPath = "/login";
 
     private String header = "Authorization";
 
     private String prefix = "Bearer ";
 
-    private int expiration = 86400;
+    private int expiration = 864000000;
 
     private String secret = "JwtSecretKey";
 

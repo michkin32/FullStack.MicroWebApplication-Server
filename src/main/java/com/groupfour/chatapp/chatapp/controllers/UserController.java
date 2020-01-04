@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-@RequestMapping("/users")
+@RequestMapping(value = "/users")
 public class UserController {
     private UserService userService;
     private UserRepository userRepository;

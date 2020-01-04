@@ -50,9 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterAfter(new AuthorizationFilter(tokenProperties), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, tokenProperties.getLoginPath()).permitAll()
-                .antMatchers(HttpMethod.POST, "/api/users").permitAll()
-                .antMatchers("/api/users/**").hasRole("ADMIN")
-                .antMatchers("/api/**").authenticated()
+                .antMatchers(HttpMethod.POST, "/users").permitAll()
+                .antMatchers("/users/**").hasRole("ADMIN")
+                .antMatchers("/**").authenticated()
                 .anyRequest().permitAll();
     }
 
