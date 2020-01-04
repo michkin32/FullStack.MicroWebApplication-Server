@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
  *      - building response-headers
  */
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class VoteController {
     private final PollService pollService;
     private final VoteService voteService;
