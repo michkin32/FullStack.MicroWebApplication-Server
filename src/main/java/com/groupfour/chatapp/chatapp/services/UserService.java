@@ -19,37 +19,13 @@ public class UserService {
 
     private static final String DEFAULT_ROLE = "ROLE_USER";
     private UserRepository userRepository;
-    private BCryptPasswordEncoder encoder;
 
 
-//    @Autowired    Not autowired in this tutorial for some reason.
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder encoder) {
+
+   @Autowired
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.encoder = encoder;
     }
-
-//  ---------------------------------------------------------------------
-//    Registration/Security Methods:
-public User register(User user) {
-    setPasswordAndRole(user);
-    return userRepository.save(user);
-}
-
-    private void setPasswordAndRole(User user) {
-        user.getUserCredentials()
-                .setPassword(encoder.encode(user.getUserCredentials().getPassword()));
-        user.getUserCredentials().setRole(DEFAULT_ROLE);
-    }
-
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUserCredentialsUsername(username);
-    }
-//    ---------------------------------------------------------------------
-
-
-
-
-
 
 
 //    These eem like they should be in Chat Repository
@@ -70,6 +46,6 @@ public User register(User user) {
         return userRepository.findByUserName(name).orElseThrow(ResourceNotFoundException::new);
     }
     public User getUserById(Long id) throws ResourceNotFoundException{
-        return userRepository.findByUserId(id).orElseThrow(ResourceNotFoundException::new);
+        return userRepository.findUserById(id);
     }
 }

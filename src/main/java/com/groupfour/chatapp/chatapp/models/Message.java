@@ -1,9 +1,6 @@
 package com.groupfour.chatapp.chatapp.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -18,6 +15,10 @@ public class Message {
 
     @ManyToOne
     private User sender;
+
+
+
+
 
     @ManyToOne
     private Chat destinationChat;

@@ -24,10 +24,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/api/users")
-    public User register(@RequestBody User user) {
-        return userService.register(user);
-    }
 
     @GetMapping("/api/users/{userId}")
     public ResponseEntity<User> getUser(@PathVariable Long userId) {
