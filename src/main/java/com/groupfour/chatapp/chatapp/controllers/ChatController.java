@@ -1,5 +1,6 @@
 package com.groupfour.chatapp.chatapp.controllers;
 
+import com.groupfour.chatapp.chatapp.dataprojections.ChatDTO;
 import com.groupfour.chatapp.chatapp.repositories.ChatRepository;
 import com.groupfour.chatapp.chatapp.services.ChatService;
 import com.groupfour.chatapp.chatapp.exceptions.ResourceNotFoundException;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 public class ChatController {
 
@@ -16,8 +18,18 @@ public class ChatController {
     private ChatRepository chatRepository;
 
     @Autowired
-    public ChatController(ChatService chatService) {
+    public ChatController(ChatService chatService, ChatRepository chatRepository) {
         this.chatService = chatService;
+        this.chatRepository = chatRepository;
+    }
+
+    @GetMapping("/chat/user/{userId}")
+    public ResponseEntity<Iterable<ChatDTO>> getChatsByUser(@PathVariable Long userId) {
+        try {
+            return new ResponseEntity<>(chatService.getUserChats(userId), HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/chat/{chatId}")
@@ -28,21 +40,6 @@ public class ChatController {
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    }
-
-    @GetMapping("/chat")
-    public ResponseEntity<Chat> findChatByName(@PathVariable String chatName) {
-        try {
-            verifyChatByName(chatName);
-            return new ResponseEntity<>(chatService.getChatByName(chatName), HttpStatus.OK);
-        } catch (ResourceNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping("/chats")
-    public ResponseEntity<Iterable<Chat>> getAllChats() {
-        return new ResponseEntity<>(chatService.getAllChats(), HttpStatus.OK);
     }
 
     @PostMapping("/chat/{adminId}")
@@ -93,11 +90,4 @@ public class ChatController {
             throw new ResourceNotFoundException("Department " + chatId + " not found.");
         }
     }
-
-    public void verifyChatByName(String chatName) {
-        if (chatRepository.findByChatName(chatName).equals(null)) {
-            throw new ResourceNotFoundException("Department " + chatName + " not found.");
-        }
-    }
-
 }

@@ -1,6 +1,7 @@
 package com.groupfour.chatapp.chatapp.services;
 
 
+import com.groupfour.chatapp.chatapp.dataprojections.ChatDTO;
 import com.groupfour.chatapp.chatapp.exceptions.ResourceNotFoundException;
 import com.groupfour.chatapp.chatapp.models.Chat;
 import com.groupfour.chatapp.chatapp.models.User;
@@ -9,6 +10,7 @@ import com.groupfour.chatapp.chatapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 
 
 @Service
@@ -35,11 +37,6 @@ public class UserService {
         defaultChat.addUserToChat(savedUser);
         chatRepository.save(defaultChat);
         return savedUser;
-    }
-
-    public Iterable<Chat> getUserChats(Long userId) throws ResourceNotFoundException {
-        User user = userRepository.findById(userId).orElseThrow(ResourceNotFoundException::new);
-        return chatRepository.findAllByUsersContains(user);
     }
 
     public User getUserByName(String name) throws ResourceNotFoundException{

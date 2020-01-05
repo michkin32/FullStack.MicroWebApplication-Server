@@ -26,9 +26,6 @@ public class User {
     private Date timeStamp = new Date();
     private Integer activeStatus = 0;
 
-    @OneToMany
-    private Set<Message> messages;
-
 
     public User() {
     }
@@ -74,14 +71,6 @@ public class User {
 
     public void setTimeStamp(Date timeStamp) {
         this.timeStamp = timeStamp;
-    }
-
-    public Set<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(Set<Message> messages) {
-        this.messages = messages;
     }
 
     public Integer getActiveStatus() {

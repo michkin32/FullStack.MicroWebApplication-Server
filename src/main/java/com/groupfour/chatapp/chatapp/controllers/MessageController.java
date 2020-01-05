@@ -1,6 +1,9 @@
 package com.groupfour.chatapp.chatapp.controllers;
 
+import com.groupfour.chatapp.chatapp.dataprojections.MessageDTO;
+import com.groupfour.chatapp.chatapp.dataprojections.UserDTO;
 import com.groupfour.chatapp.chatapp.exceptions.ResourceNotFoundException;
+import com.groupfour.chatapp.chatapp.repositories.MessageRepository;
 import com.groupfour.chatapp.chatapp.services.MessageService;
 import com.groupfour.chatapp.chatapp.models.Message;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,23 +14,28 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+import java.util.Date;
+
+@CrossOrigin
 @RestController
 public class MessageController {
 
     private MessageService messageService;
+    private MessageRepository messageRepository;
 
     @Autowired
-    public MessageController(MessageService messageService) {
+    public MessageController(MessageService messageService, MessageRepository messageRepository) {
         this.messageService = messageService;
+        this.messageRepository = messageRepository;
     }
 
 
     @MessageMapping("/chat.sendMessage")
     @SendTo("/topic/public")
-    public Message sendMessage(@Payload Message chatMessage) {
-        return chatMessage;
+    public MessageDTO sendMessage(@Payload Message chatMessage) {
+        return messageRepository.findByMessageId(chatMessage.getMessageId()).orElse(null);
     }
+
     @PostMapping("user/{userId}/chat/{chatId}/message")
     public ResponseEntity<Message> createMessageInChat(@PathVariable Long userId, @PathVariable Long chatId, @RequestBody Message message) {
         return new ResponseEntity<>(messageService.createMessageByChatId(userId, chatId, message), HttpStatus.CREATED);
@@ -35,7 +43,7 @@ public class MessageController {
 
 
     @GetMapping("/chat/{chatId}/messages")
-    public ResponseEntity<Iterable<Message>> getMessagesByChatId(@PathVariable Long chatId) {
+    public ResponseEntity<Iterable<MessageDTO>> getMessagesByChatId(@PathVariable Long chatId) {
         return new ResponseEntity<>(messageService.getMessagesByChatId(chatId), HttpStatus.CREATED);
     }
 
