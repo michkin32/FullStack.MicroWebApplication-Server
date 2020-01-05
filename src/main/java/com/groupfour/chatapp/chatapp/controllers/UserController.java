@@ -30,14 +30,6 @@ public class UserController {
         User user = userRepository.findById(userId).get();
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
-    @GetMapping("/user/{userId}/chats")
-    public ResponseEntity<Iterable<ChatDTO>> getUserChats(@PathVariable Long userId) {
-        try {
-            return new ResponseEntity<>(userService.getUserChats(userId), HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
 
     @PostMapping("/user")
     public ResponseEntity<User> createUser(@RequestBody User user) {

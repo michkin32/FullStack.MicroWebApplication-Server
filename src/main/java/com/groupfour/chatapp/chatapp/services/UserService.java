@@ -39,16 +39,6 @@ public class UserService {
         return savedUser;
     }
 
-    public Iterable<ChatDTO> getUserChats(Long userId) throws ResourceNotFoundException {
-        User user = userRepository.findById(userId).orElseThrow(ResourceNotFoundException::new);
-        Iterable<Chat> chats = chatRepository.findAllByUsersContains(user);
-        HashSet<ChatDTO> chatDTOS = new HashSet<>();
-        for (Chat c : chats) {
-            chatDTOS.add(new ChatDTO(c));
-        }
-        return chatDTOS;
-    }
-
     public User getUserByName(String name) throws ResourceNotFoundException{
         return userRepository.findByUserName(name).orElseThrow(ResourceNotFoundException::new);
     }
