@@ -1,5 +1,7 @@
 package com.groupfour.chatapp.chatapp.services;
 
+import com.groupfour.chatapp.chatapp.dataprojections.ChatDTO;
+import com.groupfour.chatapp.chatapp.exceptions.ResourceNotFoundException;
 import com.groupfour.chatapp.chatapp.models.Chat;
 import com.groupfour.chatapp.chatapp.repositories.ChatRepository;
 import com.groupfour.chatapp.chatapp.models.User;
@@ -23,14 +25,10 @@ public class ChatService {
         return chatRepository.findById(chatId).get();
     }
 
-    public Chat getChatByName(String chatName)  {
-        return chatRepository.findByChatName(chatName);
+    public Iterable<ChatDTO> getUserChats(Long userId) throws ResourceNotFoundException {
+        User user = userRepository.findById(userId).orElseThrow(ResourceNotFoundException::new);
+        return chatRepository.findAllByUsersContains(user);
     }
-
-    public Iterable<Chat> getAllChats()   {
-        return chatRepository.findAll();
-    }
-
 
     public Chat createNewChat(Chat newChat, Long adminId) {
         User admin = userRepository.findById(adminId).get();

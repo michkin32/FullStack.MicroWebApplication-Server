@@ -64,9 +64,9 @@ public class PollController {
        return new ResponseEntity<>(pollService.show(id, pollId), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/chat/{chatName}/polls", method=RequestMethod.POST)
-    public ResponseEntity<?> createPoll(@RequestBody Poll poll, @PathVariable String chatName) {
-        poll.setChat(chatService.getChatByName(chatName));
+    @RequestMapping(value="/chat/{chatId}/polls", method=RequestMethod.POST)
+    public ResponseEntity<?> createPoll(@RequestBody Poll poll, @PathVariable Long chatId) {
+        poll.setChat(chatService.getChatById(chatId));
         poll.setPollCreator(poll.getChat().getAdmin());
         poll = pollService.create(poll);
         return new ResponseEntity<>(pollService.create(poll), HttpStatus.CREATED);

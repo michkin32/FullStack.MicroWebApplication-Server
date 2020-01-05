@@ -1,6 +1,7 @@
 package com.groupfour.chatapp.chatapp.services;
 
 
+import com.groupfour.chatapp.chatapp.dataprojections.MessageDTO;
 import com.groupfour.chatapp.chatapp.models.Message;
 import com.groupfour.chatapp.chatapp.repositories.ChatRepository;
 import com.groupfour.chatapp.chatapp.repositories.MessageRepository;
@@ -36,7 +37,7 @@ public class MessageService {
         return messageRepository.findMessagesBySender_UserId(senderId);
     }
 
-    public Iterable<Message> getMessagesByChatId(Long chatId) {
+    public Iterable<MessageDTO> getMessagesByChatId(Long chatId) {
        return messageRepository.findMessagesByDestinationChat_ChatId(chatId);
     }
 
