@@ -59,4 +59,12 @@ public class UserController {
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
+    @PatchMapping("/user/{userId}")
+    public ResponseEntity<User> patchUser(@PathVariable Long userId, @RequestBody User user){
+        User existingUser = userRepository.findById(userId).get();
+        existingUser.setProfilePic(user.getProfilePic());
+        User updatedUser = userRepository.save(existingUser);
+
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    }
 }

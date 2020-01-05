@@ -22,7 +22,7 @@ public class User {
     private String email;
 
     private String password;
-
+    private String profilePic = "./assets/nophoto.png";
     private Date timeStamp = new Date();
     private Integer activeStatus = 0;
 
@@ -79,5 +79,13 @@ public class User {
 
     public void setActiveStatus(Integer activeStatus) {
         this.activeStatus = activeStatus;
+    }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
     }
 }

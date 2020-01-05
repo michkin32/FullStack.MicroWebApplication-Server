@@ -33,36 +33,36 @@ public class PollController {
         this.pollService = pollService;
     }
 
-    @PutMapping("/poll/{pollId}")
-    public ResponseEntity<Poll> getPollByPollId(@PathVariable Long pollId) {
-        try {
-            verifyPollById(pollId);
-            return new ResponseEntity<>(pollService.getPollById(pollId), HttpStatus.OK);
-        }   catch (ResourceNotFoundException ex)    {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @PatchMapping("/poll/{pollId}")
-    public ResponseEntity<Poll> addOptionToPoll(@PathVariable Long pollId, Long optionId) {
-        try {
-            verifyPollById(pollId);
-            return new ResponseEntity<>(pollService.addOptionToPoll(pollId, optionId), HttpStatus.OK);
-        }   catch (ResourceNotFoundException ex)    {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+//    @PutMapping("/poll/{pollId}")
+//    public ResponseEntity<Poll> getPollByPollId(@PathVariable Long pollId) {
+//        try {
+//            verifyPollById(pollId);
+//            return new ResponseEntity<>(pollService.getPollById(pollId), HttpStatus.OK);
+//        }   catch (ResourceNotFoundException ex)    {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
+//
+//    @PatchMapping("/poll/{pollId}")
+//    public ResponseEntity<Poll> addOptionToPoll(@PathVariable Long pollId, Long optionId) {
+//        try {
+//            verifyPollById(pollId);
+//            return new ResponseEntity<>(pollService.addOptionToPoll(pollId, optionId), HttpStatus.OK);
+//        }   catch (ResourceNotFoundException ex)    {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
 
     @GetMapping(value="/chat/{id}/polls")
     public ResponseEntity<Iterable<Poll>> getAllPolls(@PathVariable Long id) {
 
-        return new ResponseEntity<>(pollService.findAll(id), HttpStatus.OK);
+        return new ResponseEntity<>(pollService.getPollByChatId(id), HttpStatus.OK);
     }
-    @RequestMapping(value="/chat/{id}/polls/{pollId}", method= RequestMethod.GET)
-    public ResponseEntity<?> getPoll(@PathVariable Long id, @PathVariable Long pollId) {
-
-       return new ResponseEntity<>(pollService.show(id, pollId), HttpStatus.OK);
-    }
+//    @RequestMapping(value="/chat/{id}/polls/{pollId}", method= RequestMethod.GET)
+//    public ResponseEntity<?> getPoll(@PathVariable Long id, @PathVariable Long pollId) {
+//
+//       return new ResponseEntity<>(pollService.show(id, pollId), HttpStatus.OK);
+//    }
 
     @RequestMapping(value="/chat/{chatId}/polls", method=RequestMethod.POST)
     public ResponseEntity<?> createPoll(@RequestBody Poll poll, @PathVariable Long chatId) {
