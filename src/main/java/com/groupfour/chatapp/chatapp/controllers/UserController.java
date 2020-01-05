@@ -2,6 +2,7 @@ package com.groupfour.chatapp.chatapp.controllers;
 
 
 
+import com.groupfour.chatapp.chatapp.dataprojections.ChatDTO;
 import com.groupfour.chatapp.chatapp.exceptions.ResourceNotFoundException;
 import com.groupfour.chatapp.chatapp.models.Chat;
 import com.groupfour.chatapp.chatapp.models.User;
@@ -30,7 +31,7 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
     @GetMapping("/user/{userId}/chats")
-    public ResponseEntity<Iterable<Chat>> getUserChats(@PathVariable Long userId) {
+    public ResponseEntity<Iterable<ChatDTO>> getUserChats(@PathVariable Long userId) {
         try {
             return new ResponseEntity<>(userService.getUserChats(userId), HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
