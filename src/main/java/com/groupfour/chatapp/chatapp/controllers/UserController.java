@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.xml.bind.ValidationException;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 public class UserController {
 
 
@@ -26,6 +26,19 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<User> createUser(@RequestBody UserDTO user) throws ValidationException {
+    @GetMapping("/user/{username}/exists")
+    public ResponseEntity<Boolean> userExists(@PathVariable String username) {
+        return new ResponseEntity<>(userRepository.existsByUserName(username), HttpStatus.OK);
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<User> getUser(@PathVariable Long userId) {
+        User user = userRepository.findById(userId).get();
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PostMapping("/user")
+    public ResponseEntity<User> createUser(@RequestBody User user) {
         return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
     }
 

@@ -12,5 +12,6 @@ import java.util.Optional;
 public interface MessageRepository extends CrudRepository<Message, Long> {
     Iterable<Message> findMessagesBySenderId(Long senderId);
     Iterable<Message> findMessagesByChatId(Long chatId);
+    Optional<MessageDTO> findByMessageId(Long messageId);
 
 }
