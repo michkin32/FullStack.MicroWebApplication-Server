@@ -32,9 +32,9 @@ public class MessageService {
         return messageRepository.findById(messageId).get();
     }
 
-    public Iterable<Message> getMessagesByUserId(Long senderId) {
-        return messageRepository.findMessagesBySenderId(senderId);
-    }
+//    public Iterable<Message> getMessagesByUserId(Long senderId) {
+//        return messageRepository.findMessagesBySenderId(senderId);
+//    }
 
     public Iterable<Message> getMessagesByChatId(Long chatId) {
        return messageRepository.findMessagesByDestinationChat_ChatId(chatId);

@@ -39,10 +39,10 @@ public class MessageController {
         return new ResponseEntity<>(messageService.getMessagesByChatId(chatId), HttpStatus.CREATED);
     }
 
-    @GetMapping("/user/{senderId}/messages")
-    public ResponseEntity<Iterable<Message>> getMessagesByUserId(@PathVariable Long senderId) {
-        return new ResponseEntity<>(messageService.getMessagesByUserId(senderId), HttpStatus.CREATED);
-    }
+//    @GetMapping("/user/{senderId}/messages")
+//    public ResponseEntity<Iterable<Message>> getMessagesByUserId(@PathVariable Long senderId) {
+//        return new ResponseEntity<>(messageService.getMessagesByUserId(senderId), HttpStatus.CREATED);
+//    }
 
     @GetMapping("/messages/{messageId}")
     public ResponseEntity<Message> getMessage(@PathVariable Long messageId) {

@@ -10,31 +10,43 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column
+    @Column(name ="userId", nullable = false, unique = true)
+    private Long userId;
+
     private String userName;
-    @Column
+
     private String password;
-    @Column
+
     private String email;
-    @Column
+
     private Long senderId;
-    @Column
+
     private Date timeStamp;
     @OneToMany
     private Set<Message> messages;
     private Integer activeStatus;
 
+    public User() {
+    }
+
+    public User(String userName, String password, String email) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+    }
+
+
+
+
     public Long getId() {
-        return id;
+        return userId;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.userId = id;
     }
 
     public String getUserName() {

@@ -1,59 +1,64 @@
 package com.groupfour.chatapp.chatapp.services;
 
 
-import com.groupfour.chatapp.chatapp.exceptions.ResourceNotFoundException;
-import com.groupfour.chatapp.chatapp.models.Chat;
+import com.groupfour.chatapp.chatapp.dtos.UserDTO;
 import com.groupfour.chatapp.chatapp.models.User;
-import com.groupfour.chatapp.chatapp.repositories.ChatRepository;
 import com.groupfour.chatapp.chatapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Optional;
+import org.springframework.web.bind.annotation.*;
 
 
 @Service
 public class UserService {
-    final private Long defaultChatId = 1L;
+//    final private Long defaultChatId = 1L;
 
-    private static final String DEFAULT_ROLE = "ROLE_USER";
+    @Autowired
     private UserRepository userRepository;
 
 
+    public User findUserById(Long userId) {
+        return userRepository.findById(userId).get();
+    }
 
-   @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public User createUser(UserDTO user) {
+
+        User newUser = new User();
+        newUser.setUserName(user.getUsername());
+        newUser.setPassword(user.getPassword());
+        newUser.setEmail(user.getEmail());
+        return userRepository.save(newUser);
+    }
+
+
+    public User findByUsername(String username) {
+        return userRepository.findByUserName(username);
+    }
+
+
+    public User updateUser(Long id, User user) {
+        User updateUser = findUserById(id);
+        updateUser.setUserName(user.getUserName());
+        updateUser.setPassword(user.getPassword());
+        updateUser.setEmail(user.getEmail());
+        return userRepository.save(updateUser);
+    }
+
+
+    public Boolean deleteUser(Long id) {
+        User user = findUserById(id);
+        if (user != null) {
+            userRepository.delete(user);
+            return true;
+        } else
+            return false;
     }
 
 
 
 
-//    These eem like they should be in Chat Repository
-//    public User createUser(User user) {
-//        User savedUser = userRepository.save(user);
-//        Chat defaultChat = chatRepository.findById(defaultChatId).get();
-//        defaultChat.addUserToChat(savedUser);
-//        chatRepository.save(defaultChat);
-//        return savedUser;
-//    }
-//
-//    public Iterable<Chat> getUserChats(Long userId) throws ResourceNotFoundException {
-//        User user = userRepository.findById(userId).orElseThrow(ResourceNotFoundException::new);
-//        return chatRepository.findAllByUsersContains(user);
-//    }
 
-    public User getUserByName(String name) throws ResourceNotFoundException{
-        return userRepository.findByUserName(name).orElseThrow(ResourceNotFoundException::new);
-    }
-    public User getUserById(Long id) throws ResourceNotFoundException{
-        return userRepository.findUserById(id);
-    }
+
+
+
 }
