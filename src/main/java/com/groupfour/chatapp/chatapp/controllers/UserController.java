@@ -16,35 +16,35 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
-@Autowired
-private UserService userService;
+    @Autowired
+    private UserService userService;
 
-@PostMapping("/register")
-public ResponseEntity<User> createUser(@RequestBody UserDTO user){
+    @PostMapping("/register")
+    public ResponseEntity<User> createUser(@RequestBody UserDTO user){
         return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
-        }
+    }
 
-@GetMapping("/user/{id}")
-public ResponseEntity<User> findUserById(@PathVariable Long id){
+    @GetMapping("/user/{id}")
+    public ResponseEntity<User> findUserById(@PathVariable Long id){
         return new ResponseEntity<>(userService.findUserById(id), HttpStatus.OK);
-        }
+    }
 
-@PutMapping("/user/update/{id}")
-public ResponseEntity<User> updateUser (@PathVariable Long id, @RequestBody User user){
+    @PutMapping("/user/update/{id}")
+    public ResponseEntity<User> updateUser (@PathVariable Long id, @RequestBody User user){
         return new ResponseEntity<>(userService.updateUser(id, user), HttpStatus.OK);
-        }
+    }
 
-@DeleteMapping("/user/delete/{id}")
-public ResponseEntity<?> deleteUser(@PathVariable Long id){
+    @DeleteMapping("/user/delete/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id){
         return new ResponseEntity<>(userService.deleteUser(id), HttpStatus.OK);
-        }
+    }
 
-@GetMapping("/user/get/{username}")
-public ResponseEntity<User> findUserByUsername(@PathVariable String username){
+    @GetMapping("/user/get/{username}")
+    public ResponseEntity<User> findUserByUsername(@PathVariable String username){
         return new ResponseEntity<>(userService.findByUsername(username),HttpStatus.OK);
-        }
+    }
 
 
 
 
-        }
+}

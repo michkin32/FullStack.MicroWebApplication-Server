@@ -11,23 +11,24 @@ import java.util.Set;
 
 @Entity
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="userId", nullable = false, unique = true)
     private Long userId;
 
     private String userName;
-
-    private String password;
-
+    @Column(unique = true)
     private String email;
 
-    private Long senderId;
+    private String password;
+    private String profilePic = "./assets/nophoto.png";
+    private Date timeStamp = new Date();
+    private Integer activeStatus = 0;
 
-    private Date timeStamp;
     @OneToMany
     private Set<Message> messages;
-    private Integer activeStatus;
+
 
     public User() {
     }
@@ -39,14 +40,8 @@ public class User {
     }
 
 
-
-
-    public Long getId() {
+    public Long getUserId() {
         return userId;
-    }
-
-    public void setId(Long id) {
-        this.userId = id;
     }
 
     public String getUserName() {
@@ -73,7 +68,6 @@ public class User {
         this.email = email;
     }
 
-
     public Date getTimeStamp() {
         return timeStamp;
     }
@@ -96,5 +90,13 @@ public class User {
 
     public void setActiveStatus(Integer activeStatus) {
         this.activeStatus = activeStatus;
+    }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
     }
 }

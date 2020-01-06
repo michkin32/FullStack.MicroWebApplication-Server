@@ -2,6 +2,7 @@ package com.groupfour.chatapp.chatapp.services;
 
 
 import com.groupfour.chatapp.chatapp.dtos.UserDTO;
+import com.groupfour.chatapp.chatapp.exceptions.ResourceNotFoundException;
 import com.groupfour.chatapp.chatapp.models.User;
 import com.groupfour.chatapp.chatapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 
+
 @Service
 public class UserService {
-//    final private Long defaultChatId = 1L;
+    final private Long defaultChatId = 1L;
 
     @Autowired
     private UserRepository userRepository;
-
 
     public User findUserById(Long userId) {
         return userRepository.findById(userId).get();
@@ -30,11 +31,9 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-
     public User findByUsername(String username) {
         return userRepository.findByUserName(username);
     }
-
 
     public User updateUser(Long id, User user) {
         User updateUser = findUserById(id);
@@ -45,20 +44,11 @@ public class UserService {
     }
 
 
-    public Boolean deleteUser(Long id) {
-        User user = findUserById(id);
-        if (user != null) {
-            userRepository.delete(user);
-            return true;
-        } else
-            return false;
+
+
+
+    public User getUserByName(String name) throws ResourceNotFoundException {
+        return userRepository.findByUserName(name).orElseThrow(ResourceNotFoundException::new);
     }
-
-
-
-
-
-
-
 
 }

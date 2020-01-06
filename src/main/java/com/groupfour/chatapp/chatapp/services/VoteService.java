@@ -36,7 +36,6 @@ public class VoteService {
         Set<Vote> votes = poll.getVotes();
         votes.add(vote);
         poll.setVotes(votes);
-        chat.setPoll(pollId, poll);
 
         pollRepository.save(poll);
         chatRepository.save(chat);

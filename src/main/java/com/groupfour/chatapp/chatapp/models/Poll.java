@@ -35,6 +35,10 @@ public class Poll {
     @ManyToOne
     private User pollCreator;
 
+    public Poll(){
+
+    }
+
     public Poll(String question, Set<Option> options){
         this.pollQuestion = question;
         this.options = options;
