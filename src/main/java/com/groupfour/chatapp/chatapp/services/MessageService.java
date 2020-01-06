@@ -2,15 +2,21 @@ package com.groupfour.chatapp.chatapp.services;
 
 
 import com.groupfour.chatapp.chatapp.dataprojections.MessageDTO;
+import com.groupfour.chatapp.chatapp.models.Chat;
 import com.groupfour.chatapp.chatapp.models.Message;
+import com.groupfour.chatapp.chatapp.models.User;
 import com.groupfour.chatapp.chatapp.repositories.ChatRepository;
 import com.groupfour.chatapp.chatapp.repositories.MessageRepository;
 import com.groupfour.chatapp.chatapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class MessageService {
+
 
     private MessageRepository messageRepository;
     private ChatRepository chatRepository;
@@ -23,22 +29,26 @@ public class MessageService {
         this.userRepository = userRepository;
     }
 
-    public Message createMessageByChatId(Long userId, Long chatId, Message message) {
-        message.setDestinationChat(chatRepository.findById(chatId).get());
-        message.setSender(userRepository.findById(userId).get());
+    public Message createMessageByChatId(Long chatId, Message message) {
+        message.setChatId(chatId);
         return messageRepository.save(message);
+    }
+
+    public Message getMessage(Message message)  {
+        Long messageId = message.getMessageId();
+        return messageRepository.findById(messageId).get();
     }
 
     public Message getMessageById(Long messageId) {
         return messageRepository.findById(messageId).get();
     }
 
-//    public Iterable<Message> getMessagesByUserId(Long senderId) {
-//        return messageRepository.findMessagesBySenderId(senderId);
-//    }
+    public Iterable<Message> getMessagesByUserId(Long senderId) {
+        return messageRepository.findMessagesBySenderId(senderId);
+    }
 
-    public Iterable<MessageDTO> getMessagesByChatId(Long chatId) {
-       return messageRepository.findMessagesByDestinationChat_ChatId(chatId);
+    public Iterable<Message> getMessagesByChatId(Long chatId) {
+       return messageRepository.findMessagesByChatId(chatId);
     }
 
     public Message updateMessageBody(Long messageId, Message newMessage) {

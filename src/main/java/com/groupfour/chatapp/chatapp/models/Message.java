@@ -13,15 +13,11 @@ public class Message {
     private Date timeStamp = new Date();
     private String messageBody;
 
-    @ManyToOne
-    private User sender;
+
+    private Long senderId;
 
 
-
-
-
-    @ManyToOne
-    private Chat destinationChat;
+    private Long chatId;
 
     public Message() {
     }
@@ -51,19 +47,19 @@ public class Message {
         this.messageBody = messageBody;
     }
 
-    public User getSender() {
-        return sender;
+    public Long getSenderId() {
+        return senderId;
     }
 
-    public void setSender(User sender) {
-        this.sender = sender;
+    public void setSenderId(Long senderId) {
+        this.senderId = senderId;
     }
 
-    public Chat getDestinationChat() {
-        return destinationChat;
+    public Long getChatId() {
+        return chatId;
     }
 
-    public void setDestinationChat(Chat destinationChat) {
-        this.destinationChat = destinationChat;
+    public void setChatId(Long chatId) {
+        this.chatId = chatId;
     }
 }

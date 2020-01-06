@@ -16,35 +16,34 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class MessageController {
 
+
     private MessageService messageService;
-    private MessageRepository messageRepository;
 
     @Autowired
-    public MessageController(MessageService messageService, MessageRepository messageRepository) {
+    public MessageController(MessageService messageService) {
         this.messageService = messageService;
-        this.messageRepository = messageRepository;
     }
 
-
-    @MessageMapping("/chat.sendMessage")
-    @SendTo("/topic/public")
-    public MessageDTO sendMessage(@Payload Message chatMessage) {
-        return messageRepository.findByMessageId(chatMessage.getMessageId()).orElse(null);
-    }
+//    This needs a message dto to work
+//    @MessageMapping("/chat.sendMessage")
+//    @SendTo("/topic/public")
+//    public MessageDTO sendMessage(@Payload Message chatMessage) {
+//        return messageRepository.findById(chatMessage.getMessageId()).orElse(null);
+//    }
 
     @PostMapping("user/{userId}/chat/{chatId}/message")
-    public ResponseEntity<Message> createMessageInChat(@PathVariable Long userId, @PathVariable Long chatId, @RequestBody Message message) {
-        return new ResponseEntity<>(messageService.createMessageByChatId(userId, chatId, message), HttpStatus.CREATED);
+    public ResponseEntity<Message> createMessageInChat(@PathVariable Long chatId, @RequestBody Message message) {
+        return new ResponseEntity<>(messageService.createMessageByChatId(chatId, message), HttpStatus.CREATED);
     }
 
 
     @GetMapping("/chat/{chatId}/messages")
     public ResponseEntity<Iterable<MessageDTO>> getMessagesByChatId(@PathVariable Long chatId) {
-        return new ResponseEntity<>(messageService.getMessagesByChatId(chatId), HttpStatus.CREATED);
+        return new ResponseEntity(messageService.getMessagesByChatId(chatId), HttpStatus.CREATED);
     }
 
     @GetMapping("/user/{senderId}/messages")

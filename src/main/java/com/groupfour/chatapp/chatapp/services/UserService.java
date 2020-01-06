@@ -6,9 +6,11 @@ import com.groupfour.chatapp.chatapp.exceptions.ResourceNotFoundException;
 import com.groupfour.chatapp.chatapp.models.User;
 import com.groupfour.chatapp.chatapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.ValidationException;
 
 
 @Service
@@ -22,11 +24,17 @@ public class UserService {
         return userRepository.findById(userId).get();
     }
 
-    public User createUser(UserDTO user) {
-
+    public User createUser(UserDTO user) throws ValidationException {
+        String userName = user.getUsername();
+        if (userRepository.existsByUserName(userName))  {
+            throw new ValidationException("Username already exists");
+        }
+        String password = user.getPassword();
+        String encodedPassword = new BCryptPasswordEncoder().encode(password);
         User newUser = new User();
-        newUser.setUserName(user.getUsername());
-        newUser.setPassword(user.getPassword());
+
+        newUser.setUserName(userName);
+        newUser.setPassword(encodedPassword);
         newUser.setEmail(user.getEmail());
         return userRepository.save(newUser);
     }
@@ -43,12 +51,14 @@ public class UserService {
         return userRepository.save(updateUser);
     }
 
-
+    public void deleteUserById(Long id) {
+         userRepository.deleteById(id);
+    }
 
 
 
     public User getUserByName(String name) throws ResourceNotFoundException {
-        return userRepository.findByUserName(name).orElseThrow(ResourceNotFoundException::new);
+        return userRepository.findByUserName(name);
     }
 
 }

@@ -33,31 +33,38 @@ public class JwtAuthenticationController {
     private UserRepository userRepository;
 
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/authenticate")
+    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
-            final UserDetails userDetails = userDetailsService
-                    .loadUserByUsername(authenticationRequest.getUsername());
 
-        } catch (BadCredentialsException e) {
-            throw new Exception("Incorrect username or password", e);
-        }
+
+        authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+
         final UserDetails userDetails = userDetailsService
+
                 .loadUserByUsername(authenticationRequest.getUsername());
 
         final String token = jwtTokenUtility.generateToken(userDetails);
+
         return ResponseEntity.ok(new JwtResponse(token));
+
     }
 
     private void authenticate(String username, String password) throws Exception {
+
         try {
+
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+
         } catch (DisabledException e) {
+
             throw new Exception("USER_DISABLED", e);
+
         } catch (BadCredentialsException e) {
+
             throw new Exception("INVALID_CREDENTIALS", e);
+
         }
+
     }
-    }
+
+}
