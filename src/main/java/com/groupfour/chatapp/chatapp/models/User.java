@@ -22,12 +22,9 @@ public class User {
     private String email;
 
     private String password;
-
+    private String profilePic = "./assets/nophoto.png";
     private Date timeStamp = new Date();
     private Integer activeStatus = 0;
-
-    @OneToMany
-    private Set<Message> messages;
 
 
     public User() {
@@ -76,19 +73,19 @@ public class User {
         this.timeStamp = timeStamp;
     }
 
-    public Set<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(Set<Message> messages) {
-        this.messages = messages;
-    }
-
     public Integer getActiveStatus() {
         return activeStatus;
     }
 
     public void setActiveStatus(Integer activeStatus) {
         this.activeStatus = activeStatus;
+    }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
     }
 }

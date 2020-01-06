@@ -2,6 +2,7 @@ package com.groupfour.chatapp.chatapp.controllers;
 
 
 
+import com.groupfour.chatapp.chatapp.dataprojections.ChatDTO;
 import com.groupfour.chatapp.chatapp.exceptions.ResourceNotFoundException;
 import com.groupfour.chatapp.chatapp.models.Chat;
 import com.groupfour.chatapp.chatapp.models.User;
@@ -12,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@CrossOrigin
 @RestController
 public class UserController {
     private UserService userService;
@@ -24,18 +25,15 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/user/{username}/exists")
+    public ResponseEntity<Boolean> userExists(@PathVariable String username) {
+        return new ResponseEntity<>(userRepository.existsByUserName(username), HttpStatus.OK);
+    }
+
     @GetMapping("/user/{userId}")
     public ResponseEntity<User> getUser(@PathVariable Long userId) {
         User user = userRepository.findById(userId).get();
         return new ResponseEntity<>(user, HttpStatus.OK);
-    }
-    @GetMapping("/user/{userId}/chats")
-    public ResponseEntity<Iterable<Chat>> getUserChats(@PathVariable Long userId) {
-        try {
-            return new ResponseEntity<>(userService.getUserChats(userId), HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
     }
 
     @PostMapping("/user")
@@ -66,4 +64,12 @@ public class UserController {
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
+    @PatchMapping("/user/{userId}")
+    public ResponseEntity<User> patchUser(@PathVariable Long userId, @RequestBody User user){
+        User existingUser = userRepository.findById(userId).get();
+        existingUser.setProfilePic(user.getProfilePic());
+        User updatedUser = userRepository.save(existingUser);
+
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    }
 }

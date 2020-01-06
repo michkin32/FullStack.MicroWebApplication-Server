@@ -14,7 +14,7 @@ public interface PollRepository extends CrudRepository<Poll, Long> {
             "AND v.OPTION_ID = o.OPTION_ID", nativeQuery = true)
 Poll findPollByChatAndPoll(Long id,Long pollId);
 
-Iterable<Poll> findPollsByChat(Long id);
+Iterable<Poll> findPollsByChatChatId(Long id);
 
 
 }
