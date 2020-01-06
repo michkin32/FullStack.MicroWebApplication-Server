@@ -7,5 +7,6 @@ public interface MessageDTO {
     Date getTimeStamp();
     String getMessageBody();
     UserDTO getSender();
+    ChatDTO getDestinationChat();
 
 }

@@ -10,5 +10,4 @@ import java.util.Set;
 public interface ChatDTO {
     Long getChatId();
     String getChatName();
-    Date getTimeStamp();
 }
