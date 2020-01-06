@@ -9,6 +9,7 @@ import com.groupfour.chatapp.chatapp.models.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -30,9 +31,9 @@ public class MessageController {
     }
 
 
-    @MessageMapping("/chat.sendMessage")
-    @SendTo("/topic/public")
-    public MessageDTO sendMessage(@Payload Message chatMessage) {
+    @MessageMapping("/chat{chatId}.sendMessage")
+    @SendTo("/chat/{chatId}")
+    public MessageDTO sendMessage(@DestinationVariable Long chatId, @Payload Message chatMessage) {
         return messageRepository.findByMessageId(chatMessage.getMessageId()).orElse(null);
     }
 
