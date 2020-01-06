@@ -36,11 +36,12 @@ public class ChatService {
         return chatRepository.save(newChat);
     }
 
-    public Chat addUserToChat(Long chatId, Long userId) {
+    public ChatDTO addUserToChat(Long chatId, String userName) {
         Chat chat = getChatById(chatId);
-        User user = userRepository.findById(userId).get();
+        User user = userRepository.findByUserName(userName).get();
         chat.addUserToChat(user);
-        return chatRepository.save(chat);
+        chatRepository.save(chat);
+        return chatRepository.findByChatId(chatId);
     }
 
     public Chat updateChatName(Long chatId, String newChatName) {

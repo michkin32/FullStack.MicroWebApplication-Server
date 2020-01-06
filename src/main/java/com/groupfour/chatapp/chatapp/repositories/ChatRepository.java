@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ChatRepository extends CrudRepository<Chat, Long>{
     Iterable<ChatDTO> findAllByUsersContains(User user);
+    ChatDTO findByChatId(Long chatId);
 }

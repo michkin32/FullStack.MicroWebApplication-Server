@@ -25,6 +25,11 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/user/{username}/exists")
+    public ResponseEntity<Boolean> userExists(@PathVariable String username) {
+        return new ResponseEntity<>(userRepository.existsByUserName(username), HttpStatus.OK);
+    }
+
     @GetMapping("/user/{userId}")
     public ResponseEntity<User> getUser(@PathVariable Long userId) {
         User user = userRepository.findById(userId).get();
