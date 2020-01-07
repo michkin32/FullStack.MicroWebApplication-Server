@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 
 @RestController
 public class PollController {
@@ -46,6 +47,11 @@ public class PollController {
         poll.setPollCreator(poll.getChat().getAdmin());
         poll = pollService.create(poll);
         return new ResponseEntity<>(pollService.create(poll), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/poll/{pollId}")
+    public ResponseEntity<HashMap<String, Integer>> countPollVotes(@PathVariable Long pollId) {
+        return new ResponseEntity<>(pollService.getPollVotes(pollId), HttpStatus.OK);
     }
 
     @RequestMapping(value="/chat/{id}/polls", method=RequestMethod.PUT)

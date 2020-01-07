@@ -11,24 +11,19 @@ import java.util.Set;
 public class Poll {
     @Id
     @GeneratedValue
-    @Column(name = "POLL_ID")
     private Long pollId;
 
-
-    @Column(name = "QUESTION")
     private String pollQuestion;
 
     private Date timeStamp = new Date();
-    @JoinColumn(name = "POLL_ID")
+
     @Size(max = 3)
-    @OrderBy
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Option> options;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "POLL_ID")
-    @OrderBy
     private Set<Vote> votes;
+
     @ManyToOne
     private Chat chat;
 

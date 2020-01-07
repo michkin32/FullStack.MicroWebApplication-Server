@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface VoteRepository extends CrudRepository<Vote, Long> {
     @Query(value = "SELECT v.* " +
@@ -12,5 +14,7 @@ public interface VoteRepository extends CrudRepository<Vote, Long> {
             "WHERE o.POLL_ID = ?1 " +
             "AND v.OPTION_ID = o.OPTION_ID", nativeQuery = true)
     public Iterable<Vote> findVotesByPoll(Long pollId);
+
+    public Integer countVotesByOption_OptionId(Long optionId);
 }
 

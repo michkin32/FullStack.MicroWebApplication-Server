@@ -1,5 +1,6 @@
 package com.groupfour.chatapp.chatapp.repositories;
 
+import com.groupfour.chatapp.chatapp.models.Option;
 import com.groupfour.chatapp.chatapp.models.Poll;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -15,6 +16,4 @@ public interface PollRepository extends CrudRepository<Poll, Long> {
 Poll findPollByChatAndPoll(Long id,Long pollId);
 
 Iterable<Poll> findPollsByChatChatId(Long id);
-
-
 }
