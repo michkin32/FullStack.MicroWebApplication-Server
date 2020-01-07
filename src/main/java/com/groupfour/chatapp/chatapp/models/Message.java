@@ -14,10 +14,12 @@ public class Message {
     private String messageBody;
 
 
-    private Long senderId;
+    @ManyToOne
+    private User sender;
 
 
-    private Long chatId;
+    @ManyToOne
+    private Chat destinationChat;
 
     public Message() {
     }
@@ -47,19 +49,19 @@ public class Message {
         this.messageBody = messageBody;
     }
 
-    public Long getSenderId() {
-        return senderId;
+    public User getSender() {
+        return sender;
     }
 
-    public void setSenderId(Long senderId) {
-        this.senderId = senderId;
+    public void setSender(User sender) {
+        this.sender = sender;
     }
 
-    public Long getChatId() {
-        return chatId;
+    public Chat getDestinationChat() {
+        return destinationChat;
     }
 
-    public void setChatId(Long chatId) {
-        this.chatId = chatId;
+    public void setDestinationChat(Chat destinationChat) {
+        this.destinationChat = destinationChat;
     }
 }

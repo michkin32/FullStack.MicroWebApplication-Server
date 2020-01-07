@@ -29,8 +29,9 @@ public class MessageService {
         this.userRepository = userRepository;
     }
 
-    public Message createMessageByChatId(Long chatId, Message message) {
-        message.setChatId(chatId);
+    public Message createMessageByChatId(Long userId, Long chatId, Message message) {
+        message.setDestinationChat(chatRepository.findById(chatId).get());
+        message.setSender(userRepository.findById(userId).get());
         return messageRepository.save(message);
     }
 
@@ -43,12 +44,8 @@ public class MessageService {
         return messageRepository.findById(messageId).get();
     }
 
-    public Iterable<Message> getMessagesByUserId(Long senderId) {
-        return messageRepository.findMessagesBySenderId(senderId);
-    }
-
-    public Iterable<Message> getMessagesByChatId(Long chatId) {
-       return messageRepository.findMessagesByChatId(chatId);
+    public Iterable<MessageDTO> getMessagesByChatId(Long chatId) {
+        return messageRepository.findMessagesByDestinationChat_ChatId(chatId);
     }
 
     public Message updateMessageBody(Long messageId, Message newMessage) {

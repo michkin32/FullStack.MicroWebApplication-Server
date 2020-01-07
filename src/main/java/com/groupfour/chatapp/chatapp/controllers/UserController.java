@@ -21,14 +21,21 @@ import javax.xml.bind.ValidationException;
 public class UserController {
 
 
-    @Autowired
     private UserService userService;
+    private UserRepository userRepository;
 
-    @PostMapping("/register")
-    public ResponseEntity<User> createUser(@RequestBody UserDTO user) throws ValidationException {
-    @GetMapping("/user/{username}/exists")
-    public ResponseEntity<Boolean> userExists(@PathVariable String username) {
-        return new ResponseEntity<>(userRepository.existsByUserName(username), HttpStatus.OK);
+    @Autowired
+    public UserController(UserService userService, UserRepository userRepository) {
+        this.userService = userService;
+        this.userRepository = userRepository;
+    }
+
+
+
+
+    @GetMapping("/user/{userName}/exists")
+    public ResponseEntity<Boolean> userExists(@PathVariable String userName) {
+        return new ResponseEntity<>(userRepository.existsByUserName(userName), HttpStatus.OK);
     }
 
     @GetMapping("/user/{userId}")
@@ -37,8 +44,8 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping("/user")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    @PostMapping("/register")
+    public ResponseEntity<User> createUser(@RequestBody UserDTO user) throws ValidationException {
         return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
     }
 
@@ -60,7 +67,7 @@ public class UserController {
 
     @GetMapping("/user/get/{username}")
     public ResponseEntity<User> findUserByUsername(@PathVariable String username){
-        return new ResponseEntity<>(userService.findByUsername(username),HttpStatus.OK);
+        return new ResponseEntity(userService.findByUsername(username),HttpStatus.OK);
     }
 
 

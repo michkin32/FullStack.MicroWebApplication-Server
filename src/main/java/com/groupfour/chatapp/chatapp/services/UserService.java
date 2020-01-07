@@ -8,9 +8,9 @@ import com.groupfour.chatapp.chatapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
 
 import javax.xml.bind.ValidationException;
+import java.util.Optional;
 
 
 @Service
@@ -39,7 +39,7 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-    public User findByUsername(String username) {
+    public Optional<User> findByUsername(String username) {
         return userRepository.findByUserName(username);
     }
 
@@ -57,7 +57,7 @@ public class UserService {
 
 
 
-    public User getUserByName(String name) throws ResourceNotFoundException {
+    public Optional<User> getUserByName(String name) throws ResourceNotFoundException {
         return userRepository.findByUserName(name);
     }
 
