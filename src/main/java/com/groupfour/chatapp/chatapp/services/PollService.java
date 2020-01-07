@@ -1,5 +1,6 @@
 package com.groupfour.chatapp.chatapp.services;
 
+import com.groupfour.chatapp.chatapp.dataprojections.PollDTO;
 import com.groupfour.chatapp.chatapp.models.Option;
 import com.groupfour.chatapp.chatapp.models.Poll;
 import com.groupfour.chatapp.chatapp.repositories.ChatRepository;
@@ -21,10 +22,8 @@ public class PollService {
 
     }
 
-
-
-    public Iterable<Poll> findAll(Long id) {
-        Iterable<Poll> allPolls = pollRepository.findPollsByChatChatId(id);;
+    public Iterable<PollDTO> findAll(Long id) {
+        Iterable<PollDTO> allPolls = pollRepository.findPollsByChatChatId(id);;
         return allPolls;
     }
 
@@ -40,7 +39,7 @@ public class PollService {
         return pollRepository.findById(pollId).get();
     }
 
-    public Iterable<Poll> getPollByChatId(Long chatId){
+    public Iterable<PollDTO> getPollByChatId(Long chatId){
         return pollRepository.findPollsByChatChatId(chatId);
     }
 
