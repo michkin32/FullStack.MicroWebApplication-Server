@@ -3,8 +3,8 @@ package com.groupfour.chatapp.chatapp.models;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
-public class Friend extends User {
+
+public class Friend{
 
     String firstName;
 

@@ -1,6 +1,7 @@
 package com.groupfour.chatapp.chatapp.controllers;
 
 
+import com.groupfour.chatapp.chatapp.dataprojections.PollDTO;
 import com.groupfour.chatapp.chatapp.models.Poll;
 import com.groupfour.chatapp.chatapp.repositories.PollRepository;
 import com.groupfour.chatapp.chatapp.services.PollService;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 
 @RestController
 public class PollController {
@@ -33,43 +35,25 @@ public class PollController {
         this.pollService = pollService;
     }
 
-    @PutMapping("/poll/{pollId}")
-    public ResponseEntity<Poll> getPollByPollId(@PathVariable Long pollId) {
-        try {
-            verifyPollById(pollId);
-            return new ResponseEntity<>(pollService.getPollById(pollId), HttpStatus.OK);
-        }   catch (ResourceNotFoundException ex)    {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @PatchMapping("/poll/{pollId}")
-    public ResponseEntity<Poll> addOptionToPoll(@PathVariable Long pollId, Long optionId) {
-        try {
-            verifyPollById(pollId);
-            return new ResponseEntity<>(pollService.addOptionToPoll(pollId, optionId), HttpStatus.OK);
-        }   catch (ResourceNotFoundException ex)    {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
     @GetMapping(value="/chat/{id}/polls")
-    public ResponseEntity<Iterable<Poll>> getAllPolls(@PathVariable Long id) {
+    public ResponseEntity<Iterable<PollDTO>> getAllPolls(@PathVariable Long id) {
 
-        return new ResponseEntity<>(pollService.findAll(id), HttpStatus.OK);
-    }
-    @RequestMapping(value="/chat/{id}/polls/{pollId}", method= RequestMethod.GET)
-    public ResponseEntity<?> getPoll(@PathVariable Long id, @PathVariable Long pollId) {
-
-       return new ResponseEntity<>(pollService.show(id, pollId), HttpStatus.OK);
+        return new ResponseEntity<>(pollService.getPollByChatId(id), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/chat/{chatName}/polls", method=RequestMethod.POST)
-    public ResponseEntity<?> createPoll(@RequestBody Poll poll, @PathVariable String chatName) {
-        poll.setChat(chatService.getChatByName(chatName));
+
+    @RequestMapping(value="/chat/{chatId}/polls", method=RequestMethod.POST)
+    public ResponseEntity<PollDTO> createPoll(@RequestBody Poll poll, @PathVariable Long chatId) {
+        poll.setChat(chatService.getChatById(chatId));
         poll.setPollCreator(poll.getChat().getAdmin());
         poll = pollService.create(poll);
-        return new ResponseEntity<>(pollService.create(poll), HttpStatus.CREATED);
+        PollDTO dto = pollRepository.findByPollId(poll.getPollId());
+        return new ResponseEntity<>( dto, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/poll/{pollId}")
+    public ResponseEntity<HashMap<String, Integer>> countPollVotes(@PathVariable Long pollId) {
+        return new ResponseEntity<>(pollService.getPollVotes(pollId), HttpStatus.OK);
     }
 
     @RequestMapping(value="/chat/{id}/polls", method=RequestMethod.PUT)
@@ -79,6 +63,7 @@ public class PollController {
     @RequestMapping(value="/chat/{id}/polls", method=RequestMethod.DELETE)
     public ResponseEntity<?> deletePoll( @PathVariable Long id) {
         try {
+            verifyPollById(id);
             pollService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }catch(ResourceNotFoundException ex){
@@ -86,7 +71,6 @@ public class PollController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
 
     public void verifyPollById(Long pollId) {
         if(pollRepository.existsById(pollId))  {

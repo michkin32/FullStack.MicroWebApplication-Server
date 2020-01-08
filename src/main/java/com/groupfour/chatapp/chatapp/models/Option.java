@@ -12,9 +12,6 @@ public class Option {
     private String optionName;
 
 
-
-
-
     public Long getOptionId() {
         return optionId;
     }

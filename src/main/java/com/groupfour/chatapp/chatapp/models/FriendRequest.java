@@ -2,22 +2,23 @@ package com.groupfour.chatapp.chatapp.models;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class FriendRequest {
 
     @GeneratedValue
     @Id
-    private Long FriendRequestId;
+    private Long friendRequestId;
 
     @ManyToOne
     private User sender;
 
+
     @ManyToOne
     private User recipient;
 
-    private List<Friends> friends;
+    private boolean friendRequestChoice;
+
 
     @Autowired
     public FriendRequest(User sender, User recipient) {
@@ -25,6 +26,8 @@ public class FriendRequest {
         this.recipient = recipient;
     }
 
+    public FriendRequest() {
+    }
 
     public User getSender() {
         return sender;
@@ -43,11 +46,19 @@ public class FriendRequest {
     }
 
     public Long getFriendRequestId() {
-        return FriendRequestId;
+        return friendRequestId;
     }
 
     public void setFriendRequestId(Long friendRequestId) {
-        FriendRequestId = friendRequestId;
+        this.friendRequestId = friendRequestId;
+    }
+
+    public boolean isFriendRequestChoice() {
+        return friendRequestChoice;
+    }
+
+    public void setFriendRequestChoice(boolean friendRequestChoice) {
+        this.friendRequestChoice = friendRequestChoice;
     }
 
 }

@@ -1,7 +1,5 @@
 package com.groupfour.chatapp.chatapp.models;
 
-
-
 import com.groupfour.chatapp.chatapp.models.Message;
 
 import javax.persistence.*;
@@ -23,20 +21,15 @@ public class User {
     private String email;
 
     private String password;
-
+    private String profilePic = "./assets/nophoto.png";
     private Date timeStamp = new Date();
     private Integer activeStatus = 0;
 
-    @OneToMany
-    private Set<Message> messages;
+    @ManyToMany(cascade=CascadeType.ALL)
+    private List<FriendRequest> friendRequests;
 
-    @OneToMany
-    List<User> friends;
-
-    @Enumerated
-    OnlineStatus status;
-
-
+    @ManyToMany
+    private List<User> friends;
 
     public User() {
     }
@@ -84,19 +77,50 @@ public class User {
         this.timeStamp = timeStamp;
     }
 
-    public Set<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(Set<Message> messages) {
-        this.messages = messages;
-    }
-
     public Integer getActiveStatus() {
         return activeStatus;
     }
 
     public void setActiveStatus(Integer activeStatus) {
         this.activeStatus = activeStatus;
+    }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
+    }
+
+    public List<FriendRequest> getFriendRequests() {
+        return friendRequests;
+    }
+
+    public void setFriendRequests(List<FriendRequest> friendRequests) {
+        this.friendRequests = friendRequests;
+    }
+
+    public void addFriendRequest(FriendRequest friendRequest){
+        this.friendRequests.add(friendRequest);
+    }
+
+    public void deleteFriendRequest(FriendRequest friendRequest){
+        for (int currentIndex = 0; currentIndex < friendRequests.size(); currentIndex++) {
+             if(friendRequests.get(currentIndex).getRecipient() == friendRequest.getRecipient())
+                 this.friendRequests.remove(friendRequests.get(currentIndex));
+        }
+    }
+
+    public List<User> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<User> friends) {
+        this.friends = friends;
+    }
+
+    public void addFriends(User user){
+        friends.add(user);
     }
 }
