@@ -16,11 +16,14 @@ public class Message {
     private Date timeStamp = new Date();
     private String messageBody;
 
+
     @ManyToOne
     private User sender;
 
     @ManyToOne
     private Chat destinationChat;
+
+
 
     public Message() {
     }

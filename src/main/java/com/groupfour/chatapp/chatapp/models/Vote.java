@@ -1,17 +1,16 @@
 package com.groupfour.chatapp.chatapp.models;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @Entity
 public class Vote {
 
     @Id
     @GeneratedValue
-    @Column(name = "VOTE_ID")
     private Long voteId;
 
     @ManyToOne
-    @JoinColumn(name = "OPTION_ID")
     private Option option;
 
     @OneToOne

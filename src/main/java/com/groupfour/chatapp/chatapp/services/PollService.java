@@ -5,20 +5,24 @@ import com.groupfour.chatapp.chatapp.models.Poll;
 import com.groupfour.chatapp.chatapp.repositories.ChatRepository;
 import com.groupfour.chatapp.chatapp.repositories.OptionRepository;
 import com.groupfour.chatapp.chatapp.repositories.PollRepository;
+import com.groupfour.chatapp.chatapp.repositories.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
 
 @Service
 public class PollService {
 
     private PollRepository pollRepository;
-
+    private VoteRepository voteRepository;
     private OptionRepository optionRepository;
 
     @Autowired
-    public PollService(PollRepository pollRepository) {
+    public PollService(PollRepository pollRepository, VoteRepository voteRepository, OptionRepository optionRepository) {
         this.pollRepository = pollRepository;
-
+        this.voteRepository = voteRepository;
+        this.optionRepository = optionRepository;
     }
 
 
@@ -48,6 +52,15 @@ public class PollService {
         Poll newPoll = pollRepository.save(poll);
 
         return newPoll;
+    }
+
+    public HashMap<String, Integer> getPollVotes(Long pollId) {
+        Poll poll = pollRepository.findById(pollId).get();
+        HashMap<String, Integer> map = new HashMap<>();
+        for (Option option : poll.getOptions()) {
+            map.put(option.getOptionName(), voteRepository.countVotesByOption_OptionId(option.getOptionId()));
+        }
+        return  map;
     }
 
     public Poll addOptionToPoll(Long pollId, Long optionId) {

@@ -8,4 +8,5 @@ public interface MessageDTO {
     String getMessageBody();
     UserDTO getSender();
     ChatDTO getDestinationChat();
+
 }
