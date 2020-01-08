@@ -14,7 +14,6 @@ public class Poll {
     @Column(name = "POLL_ID")
     private Long pollId;
 
-
     @Column(name = "QUESTION")
     private String pollQuestion;
 
