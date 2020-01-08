@@ -1,6 +1,7 @@
 package com.groupfour.chatapp.chatapp.controllers;
 
 
+import com.groupfour.chatapp.chatapp.dataprojections.PollDTO;
 import com.groupfour.chatapp.chatapp.models.Poll;
 import com.groupfour.chatapp.chatapp.repositories.PollRepository;
 import com.groupfour.chatapp.chatapp.services.PollService;
@@ -35,18 +36,19 @@ public class PollController {
     }
 
     @GetMapping(value="/chat/{id}/polls")
-    public ResponseEntity<Iterable<Poll>> getAllPolls(@PathVariable Long id) {
+    public ResponseEntity<Iterable<PollDTO>> getAllPolls(@PathVariable Long id) {
 
         return new ResponseEntity<>(pollService.getPollByChatId(id), HttpStatus.OK);
     }
 
 
     @RequestMapping(value="/chat/{chatId}/polls", method=RequestMethod.POST)
-    public ResponseEntity<?> createPoll(@RequestBody Poll poll, @PathVariable Long chatId) {
+    public ResponseEntity<PollDTO> createPoll(@RequestBody Poll poll, @PathVariable Long chatId) {
         poll.setChat(chatService.getChatById(chatId));
         poll.setPollCreator(poll.getChat().getAdmin());
         poll = pollService.create(poll);
-        return new ResponseEntity<>(pollService.create(poll), HttpStatus.CREATED);
+        PollDTO dto = pollRepository.findByPollId(poll.getPollId());
+        return new ResponseEntity<>( dto, HttpStatus.CREATED);
     }
 
     @GetMapping("/poll/{pollId}")
