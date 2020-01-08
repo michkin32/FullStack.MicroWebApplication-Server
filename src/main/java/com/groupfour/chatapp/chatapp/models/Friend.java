@@ -6,10 +6,6 @@ import java.util.List;
 @Entity
 public class Friend extends User {
 
-    @GeneratedValue
-    @Id
-    Long id;
-
     String firstName;
 
     String lastName;
@@ -53,14 +49,6 @@ public class Friend extends User {
 
     public void setStatus(OnlineStatus status) {
         this.status = status;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getFirstName() {

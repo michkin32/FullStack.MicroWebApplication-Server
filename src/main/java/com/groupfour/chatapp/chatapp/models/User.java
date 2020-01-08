@@ -6,6 +6,7 @@ import com.groupfour.chatapp.chatapp.models.Message;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,6 +29,13 @@ public class User {
 
     @OneToMany
     private Set<Message> messages;
+
+    @OneToMany
+    List<User> friends;
+
+    @Enumerated
+    OnlineStatus status;
+
 
 
     public User() {
