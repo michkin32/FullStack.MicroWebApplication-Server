@@ -1,84 +1,28 @@
-# Micro Web Application - Server
-* **Objective** - to create an implementation of a small web service
-* **Purpose** - to demonstrate the construction of a full-stacked web-application
+# Chat App (Whomp Chat?)
 
-## Developmental Notes
-### Minimum Tech Stack
-* **Wireframe** - Mockflow
-* **Frontend** - Angular / React
-* **Business Logic** - Java
-* **Data Layer** - MySQL
-* **Cloud** - Heroku
+A Spring Boot api to provide endpoints for a real-time messaging platform
 
-### Installation
-* Install [NodeJs](https://nodejs.org/en/). From terminal execute
-    * `brew install node`
-* Install [Angular](http://angular.io/). From terminal execute
-    * `brew install angular-cli`
-* Install [AngularCli](). From terminal execute
-    * `npm install -g @angular/cli`
-* Install [Heroku](). From terminal execute
-	* `brew tap heroku/brew && brew install heroku`
+### Requirements:
+#### In-Memory/Cloud:
+- Java 8+ 
+- Maven
+#### Cloud: 
+- Mariadb
 
-<hr><hr>
+### Installation:
 
+1. Build with maven: ``` mvn package ```
 
+2. Set enviroment variable for profile to either "in-memory" or "cloud"
 
+- Command to set the profile to in-memory on Unix machines:``` export spring_profiles_active=in-memory ```
+- Command to set the profile to cloud:``` export spring_profiles_active=cloud ```
 
+3. If profile is set to cloud then set the database url, user, and password using the following enviorment variables:
+```
+spring_datasource_url
+spring_datasource_username
+spring_datasource_password
+```
 
-
-
-
-## Project Topics
-
-### TCP Application
-
-#### User Stories to Fulfill  
-* As a client, (not logged in) I
-    * can send messages to a _peer_.
-	* can view default channels
-	* can view all accessible channels
-	* can view messages live as they are received
-
-<hr>
-
-
-
-
-
-### Blog Application
-
-#### User Stories to Fulfill  
-* As a client, (not logged in) I
-    * can create new blog posts
-        * A blog post can consist of images and text
-	* can view list of all blog posts
-    * can view blog posts filtered by blog-tag
-	* can view new blog posts upon refreshing the DOM
-
-<hr>
-
-
-
-
-
-### Video Library Application
-
-#### User Stories to Fulfill  
-* As a client, (not logged in) I
-    * can upload new videos
-	* can view list of all videos
-	* can post simple text-comments on a video
-
-
-
-
-
-### Money Management Application
-
-#### User Stories to Fulfill  
-* As a client, (not logged in) I
-	* can create new accounts
-	* deposit money to each account
-	* withdrawl money from each account
-	* transfer money to and from any 2 accounts
+4. run the packaged jar: ```java -jar build_name.jar```
