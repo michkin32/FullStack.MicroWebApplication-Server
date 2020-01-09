@@ -30,12 +30,13 @@ public class VoteController {
         this.pollService = pollService;
     }
 
-    @RequestMapping(value = "/chats/{chatId}/polls/{pollId}/votes", method = RequestMethod.POST)
+    @RequestMapping(value = "vote/poll/{pollId}/chat/{chatId}", method = RequestMethod.POST)
     public ResponseEntity<Vote> createVote(
             @PathVariable Long chatId,
             @PathVariable Long pollId,
-            @RequestBody Vote vote) {
-        vote = voteService.create(chatId, pollId, vote);
+            @RequestParam Long userId,
+            @RequestParam Long optionId) {
+        Vote vote = voteService.create(chatId, pollId, userId, optionId);
         HttpHeaders responseHeaders = new HttpHeaders(); // Set the headers for the newly created resource
         responseHeaders.setLocation(ServletUriComponentsBuilder
                 .fromCurrentRequest()

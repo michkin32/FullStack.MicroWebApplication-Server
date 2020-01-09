@@ -67,7 +67,7 @@ public class MessageController {
         }
     }
 
-    @DeleteMapping("messages/{messageId")
+    @DeleteMapping("/messages/{messageId}")
     public ResponseEntity<Boolean> deleteMessage(@PathVariable Long messageId) {
         try {
             verifyMessage(messageId);
@@ -81,5 +81,9 @@ public class MessageController {
         if (!messageService.messageExists(messageId)) {
             throw new ResourceNotFoundException("Message " + messageId + " not found.");
         }
+    }
+    @PatchMapping("/messages/{messageId}")
+    private ResponseEntity<Message> updateMessageSender(){
+return null;
     }
 }

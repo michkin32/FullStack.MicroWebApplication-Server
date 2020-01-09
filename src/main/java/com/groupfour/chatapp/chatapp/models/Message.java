@@ -21,6 +21,8 @@ public class Message {
     @ManyToOne
     private Chat destinationChat;
 
+
+
     public Message() {
     }
 
