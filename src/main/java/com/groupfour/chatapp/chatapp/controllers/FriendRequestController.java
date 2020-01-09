@@ -8,9 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.OneToMany;
-import java.util.List;
-
 @RestController
 public class FriendRequestController {
 
@@ -32,7 +29,12 @@ public class FriendRequestController {
     }
 
     @DeleteMapping("/delete-friends")
-    public ResponseEntity<?> removeFriendRequests(@RequestBody List<Long> friendRequestsIds) {
+    public ResponseEntity<?> removeFriendRequests(@RequestBody FriendRequest friendRequests) {
+        try {
+            friendRequestService.removeFriendRequest(friendRequests);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
