@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+// TODO - Modify `CrossOrigin`
+@CrossOrigin("*") // allow any front-end application to hit this port
 @RestController
 public class FriendRequestController {
 
@@ -20,12 +22,22 @@ public class FriendRequestController {
 
     @PostMapping("/friendRequest/sender/{senderName}/receiver/{receiverName}")
     public ResponseEntity<FriendRequestDTO> sendFriendRequestToUserId(@PathVariable String senderName, @PathVariable String receiverName){
+        try{
         ResponseEntity<FriendRequestDTO> friendRequestResponseEntity = new ResponseEntity<>(friendRequestService.createFriendRequestByUserId(senderName, receiverName), HttpStatus.OK);
         return friendRequestResponseEntity;
+        }catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
     @PostMapping("/friendRequestChoice")
     public ResponseEntity<?> UpdateRequest(@RequestBody FriendRequest friendRequest) {
-        return new ResponseEntity<>(friendRequestService.choiceFriendRequest(friendRequest), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(friendRequestService.choiceFriendRequest(friendRequest), HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/delete-friends")
@@ -38,4 +50,3 @@ public class FriendRequestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
-
